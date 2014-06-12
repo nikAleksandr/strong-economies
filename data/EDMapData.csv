@@ -1,4 +1,4 @@
-Fips,County,State,CountyState,,CountySize,EconDevType,TypeNum
+id,County,State,CountyState,,CountySize,EconDevType,TypeNum
 6001,Alameda County,CA,"Alameda County,CA",,Large Counties,Workforce Development,1
 22005,Ascension Parish,LA,"Ascension Parish,LA",,Medium-sized Counties,Strategic Planning,2
 13015,Bartow County,GA,"Bartow County,GA",,Medium-sized Counties,Workforce Development,1

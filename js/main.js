@@ -7,9 +7,16 @@ var zoom = d3.behavior.zoom()
 var width = document.getElementById('container').offsetWidth-60;
 var height = width / 2;
 
+var typeById = {},
+	nameById = {};
+
 var topo,projection,path,svg,g;
 
 var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
+
+var	color = d3.scale.threshold()
+	.domain([0,1,2,3,4,5,6,7])
+	.range(['rgb(228,26,28)','rgb(55,126,184)','rgb(77,175,74)','rgb(152,78,163)','rgb(255,127,0)','rgb(255,255,51)','rgb(166,86,40)']);
 
 setup(width,height);
 
@@ -32,11 +39,11 @@ function setup(width,height){
 
 }
 
-d3.csv("EDMapData.csv", function (error, countyData) {
+d3.csv("data/EDMapData.csv", function (error, countyData) {
 	data = countyData;
 	
 	countyData.forEach(function(d) { 
-	  	TypeById[d.id] = +d.TypeNum; 
+	  	typeById[d.id] = +d.TypeNum; 
 	  	nameById[d.id] = d.countyState;
 	});
 	
@@ -60,7 +67,7 @@ function draw(topo) {
       .attr("class", "county")
       .attr("d", path)
       .attr("id", function(d,i) { return d.id; })
-      .style("fill", function(d) { if(!isNaN(RGDPGrowth13ById[d.id])){return color(RGDPGrowth13ById[d.id]);} else{return "#ccc";} });
+      .style("fill", function(d) { if(!isNaN(typeById[d.id])){return color(typeById[d.id]);} else{return "#ccc";} });
 
   //ofsets plus width/height of transform, plsu 20 px of padding, plus 20 extra for tooltip offset off mouse
   var offsetL = document.getElementById('container').offsetLeft+(width/2)+40;
@@ -76,8 +83,22 @@ function draw(topo) {
           .html(d.properties.name);
       })
       .on("mouseout",  function(d,i) {
-        tooltip.classed("hidden", true)
+        tooltip.classed("hidden", true);
       }); 
+   
+   var makeCircles = d3.select('svg').selectAll("circle").data(topo).enter()
+   		.append("circle")
+   		.each(function(it){
+   			
+   			it.properties.r = 20;
+   			it.properties.c = path.centroid(it);
+   			it.properties.x = 400;
+   			it.properties.y = 300;
+   			
+   		})
+   		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] - 400;})
+   		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] - 300;})
+   		.attr("r", function(it) { return it.properties.r;});
    
 }
 
