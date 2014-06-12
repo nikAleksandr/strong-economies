@@ -16,7 +16,7 @@ setup(width,height);
 function setup(width,height){
   projection = d3.geo.albersUsa()
     .translate([0, 0])
-    .scale(width / 2 / Math.PI);
+    .scale(width);
 
   path = d3.geo.path()
       .projection(projection);
