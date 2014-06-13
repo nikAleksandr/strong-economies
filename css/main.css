@@ -93,9 +93,17 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+circle{
+	display:none;
+	fill:none;
+	stroke-width: 1px;
+	stroke: black;
+}
 
-
-
+.hasData > circle{
+	display:block
+	fill: blue;
+}
 
 
 

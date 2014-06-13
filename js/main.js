@@ -65,6 +65,7 @@ function draw(topo) {
 
   county.enter().insert("path")
       .attr("class", "county")
+      .classed("hasData", function(d){return !isNaN(typeById[d.id]);} )
       .attr("d", path)
       .attr("id", function(d,i) { return d.id; })
       .style("fill", function(d) { if(!isNaN(typeById[d.id])){return color(typeById[d.id]);} else{return "#ccc";} });
@@ -89,15 +90,13 @@ function draw(topo) {
    var makeCircles = d3.select('svg').selectAll("circle").data(topo).enter()
    		.append("circle")
    		.each(function(it){
-   			
    			it.properties.r = 20;
    			it.properties.c = path.centroid(it);
-   			it.properties.x = 400;
-   			it.properties.y = 300;
-   			
+   			it.properties.x = width/2;
+   			it.properties.y = height/2;	
    		})
-   		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] - 400;})
-   		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] - 300;})
+   		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] ;})
+   		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { return it.properties.r;});
    
 }
