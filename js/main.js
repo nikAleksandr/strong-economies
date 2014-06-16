@@ -15,8 +15,9 @@ var topo,projection,path,svg,g;
 var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
 
 var	color = d3.scale.threshold()
-	.domain([0,1,2,3,4,5,6,7])
-	.range(['rgb(228,26,28)','rgb(55,126,184)','rgb(77,175,74)','rgb(152,78,163)','rgb(255,127,0)','rgb(255,255,51)','rgb(166,86,40)']);
+	.domain([1,2,3,4,5,6,7])
+	.range(['rgb(201,201,201)', 'rgb(253,156,2)', 'rgb(0,153,209)', 'rgb(70,200,245)', 'rgb(254,207,47)', 'rgb(102,204,204)', 'rgb(69,178,157)']);
+	//.range(['rgb(228,26,28)','rgb(55,126,184)','rgb(77,175,74)','rgb(152,78,163)','rgb(255,127,0)','rgb(255,255,51)','rgb(166,86,40)']);
 
 setup(width,height);
 
@@ -53,13 +54,14 @@ d3.csv("data/EDMapData.csv", function (error, countyData) {
 d3.json("us.json", function(error, us) {
 
   var counties = topojson.feature(us, us.objects.counties).features;
-
+  var stateMesh = topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; });
+  
   topo = counties;
-  draw(topo);
+  draw(topo, stateMesh);
 
 });
 
-function draw(topo) {
+function draw(topo, stateMesh) {
 
   var county = g.selectAll(".county").data(topo);
 
@@ -68,8 +70,12 @@ function draw(topo) {
       .classed("hasData", function(d){return !isNaN(typeById[d.id]);} )
       .attr("d", path)
       .attr("id", function(d,i) { return d.id; })
-      .style("fill", function(d) { if(!isNaN(typeById[d.id])){return color(typeById[d.id]);} else{return "#ccc";} });
+      .style("fill", function(d) { if(!isNaN(typeById[d.id])){return color(typeById[d.id]);} else{return "rgb(201,201,201)";} });
 
+  g.append("path").datum(stateMesh)
+		.attr("id", "state-borders")
+		.attr("d", path);
+  
   //ofsets plus width/height of transform, plsu 20 px of padding, plus 20 extra for tooltip offset off mouse
   var offsetL = document.getElementById('container').offsetLeft+(width/2)+40;
   var offsetT =document.getElementById('container').offsetTop+(height/2)+20;
