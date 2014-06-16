@@ -94,10 +94,12 @@ function draw(topo) {
    			it.properties.c = path.centroid(it);
    			it.properties.x = width/2;
    			it.properties.y = height/2;	
+   			it.properties.fill = color(typeById[it.id]);
    		})
    		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] ;})
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
-   		.attr("r", function(it) { return it.properties.r;});
+   		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
+   		.style("fill", function(it){ return it.properties.fill;});
    
 }
 
