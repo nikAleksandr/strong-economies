@@ -50,6 +50,8 @@ function setup(width,height){
       .call(zoom);
 
   g = svg.append("g");
+  
+  colorFilters();
 
 }
 
@@ -122,7 +124,14 @@ function draw(topo, stateMesh) {
    
 }
 //want to make filter objects, one set for colors, another for sizes
+var buttons;
 function colorFilters(){
+	buttons = d3.select("#filters").selectAll(".btn");
+	
+	buttons.on("click", function(){
+		var selectedFilter = this.id;
+		d3.selectAll('circle').style("display", function(){ if(classed(selectedFilter)){return 'none';}});
+	});
 	
 }
 
