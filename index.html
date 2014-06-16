@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.7.1.min.js"></script>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <script src="http://d3js.org/d3.v3.min.js"></script>
 		<script src="http://d3js.org/topojson.v1.min.js"></script>
     </head>
@@ -22,6 +23,27 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
+		<div id="header">
+			
+		</div>
+		<div id="filters" class="container">
+			<div class="row">
+				<div class="col-md-3" id="popFilters">
+					<button type="button" id="small" class="btn btn-default btn-block">Small</button>
+					<button type="button" id="medium" class="btn btn-default btn-block">Medium-sized</button>
+					<button type="button" id="large" class="btn btn-default btn-block">Large</button>
+				</div>
+				<div class="col-md-9" id="typeFilters">
+					<button type="button" id="workforce" class="btn btn-default">Workforce Development</button>
+					<button type="button" id="stratPlan" class="btn btn-default">Strategic Planning</button>
+					<button type="button" id="entrep" class="btn btn-default">Entreprenuership &amp; Small Business Support</button>
+					<button type="button" id="inter" class="btn btn-default">International Economic Development Initiatives</button>
+					<button type="button" id="infra" class="btn btn-default">Infrastructure Investment</button>
+					<button type="button" id="region" class="btn btn-default">Regional Marketing and Branding</button>
+				</div>
+			</div>
+		</div>
+		
 		<div id="map"></div>
 		
 		

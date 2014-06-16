@@ -121,7 +121,7 @@ circle{
 	stroke-linecap: round;
 }
 /*
- * County and Circle Color CSS
+ * County and Circle Color (with respective button) CSS
  */
 .noData{
 	fill: rgb(201,201,201);
@@ -129,20 +129,44 @@ circle{
 .workforce{
 	fill: rgb(253,156,2);
 }
+#workforce{
+	background-color: rgb(253,156,2);
+	color: #fff;
+}
 .stratPlan{
 	fill: rgb(0,153,209);
+}
+#stratPlan{
+	background-color:rgb(0,153,209);
+	color:#fff;
 }
 .entrep{
 	fill: rgb(70,200,245);
 }
+#entrep{
+	background-color: rgb(70,200,245);
+	color:#fff;
+}
 .inter{
 	fill: rgb(254,207,47);
+}
+#inter{
+	background-color: rgb(254,207,47);
+	color:#fff;
 }
 .infra{
 	fill:rgb(102,204,204);
 }
+#infra{
+	background-color:rgb(102,204,204);
+	color:#fff;
+}
 .region{
 	fill:rgb(69,178,157);
+}
+#region{
+	background-color:rgb(69,178,157);
+	color:#fff;
 }
 /*
  * Circle Size classes
@@ -156,10 +180,18 @@ circle{
 .small{
 	r:20;
 }
-
-
-
-
+/*
+ * Button and Header styles
+ */
+#filters{
+	padding-top:20px;
+}
+#popFilters{
+	width:200px;
+}
+#typeFilters > .btn{
+	margin:5px;
+}
 
 
 
