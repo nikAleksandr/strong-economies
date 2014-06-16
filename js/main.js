@@ -8,16 +8,29 @@ var width = document.getElementById('container').offsetWidth-60;
 var height = width / 2;
 
 var typeById = {},
-	nameById = {};
+	nameById = {},
+	sizeById = {};
 
 var topo,projection,path,svg,g;
 
 var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
 
-var	color = d3.scale.threshold()
+var	colorClasses = d3.scale.threshold()
 	.domain([1,2,3,4,5,6,7])
-	.range(['rgb(201,201,201)', 'rgb(253,156,2)', 'rgb(0,153,209)', 'rgb(70,200,245)', 'rgb(254,207,47)', 'rgb(102,204,204)', 'rgb(69,178,157)']);
-	//.range(['rgb(228,26,28)','rgb(55,126,184)','rgb(77,175,74)','rgb(152,78,163)','rgb(255,127,0)','rgb(255,255,51)','rgb(166,86,40)']);
+	.range(['noData', 'workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region']);
+
+function sizeClasses(d){
+	switch(d){
+		case 3:
+			return "large";
+			break;
+		case 2:
+			return "medium";
+			break;
+		default:
+			return "small";
+	}
+}
 
 setup(width,height);
 
@@ -46,6 +59,7 @@ d3.csv("data/EDMapData.csv", function (error, countyData) {
 	countyData.forEach(function(d) { 
 	  	typeById[d.id] = +d.TypeNum; 
 	  	nameById[d.id] = d.countyState;
+	  	sizeById[d.id] = +d.CountySize;
 	});
 	
 });
@@ -67,10 +81,9 @@ function draw(topo, stateMesh) {
 
   county.enter().insert("path")
       .attr("class", "county")
-      .classed("hasData", function(d){return !isNaN(typeById[d.id]);} )
       .attr("d", path)
       .attr("id", function(d,i) { return d.id; })
-      .style("fill", function(d) { if(!isNaN(typeById[d.id])){return color(typeById[d.id]);} else{return "rgb(201,201,201)";} });
+      .attr("class", function(d){if(!isNaN(typeById[d.id])){return "county " + "hasData "+ colorClasses(typeById[d.id]);}else{return "county";}});
 
   g.append("path").datum(stateMesh)
 		.attr("id", "state-borders")
@@ -96,17 +109,21 @@ function draw(topo, stateMesh) {
    var makeCircles = d3.select('svg').selectAll("circle").data(topo).enter()
    		.append("circle")
    		.each(function(it){
-   			it.properties.r = 20;
+   			it.properties.r = sizeById[it.id]*2 + 13;
    			it.properties.c = path.centroid(it);
    			it.properties.x = width/2;
    			it.properties.y = height/2;	
-   			it.properties.fill = color(typeById[it.id]);
+   			//it.properties.class = color(typeById[it.id]);
    		})
    		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] ;})
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
-   		.style("fill", function(it){ return it.properties.fill;});
+   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + colorClasses(typeById[it.id]);}else{return "county";}});
    
+}
+//want to make filter objects, one set for colors, another for sizes
+function colorFilters(){
+	
 }
 
 function redraw() {

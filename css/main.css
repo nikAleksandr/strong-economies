@@ -114,14 +114,48 @@ circle{
 	pointer-events: none;
 }
 .county{
+	fill: rgb(201,201,201);
 	stroke-width:.8px;
 	stroke:#eee;
 	stroke-linejoin: round;
 	stroke-linecap: round;
 }
-
-
-
+/*
+ * County and Circle Color CSS
+ */
+.noData{
+	fill: rgb(201,201,201);
+}
+.workforce{
+	fill: rgb(253,156,2);
+}
+.stratPlan{
+	fill: rgb(0,153,209);
+}
+.entrep{
+	fill: rgb(70,200,245);
+}
+.inter{
+	fill: rgb(254,207,47);
+}
+.infra{
+	fill:rgb(102,204,204);
+}
+.region{
+	fill:rgb(69,178,157);
+}
+/*
+ * Circle Size classes
+ */
+.large{
+	r: 15;	
+}
+.medium{
+	r:18;
+}
+.small{
+	r:20;
+}
 
 
 
