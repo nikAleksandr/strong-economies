@@ -82,7 +82,7 @@ d3.json("us.json", function(error, us) {
 function draw(topo, stateMesh) {
 
   var county = g.selectAll(".county").data(topo);
-
+  
   county.enter().insert("path")
       .attr("class", "county")
       .attr("d", path)
@@ -112,6 +112,7 @@ function draw(topo, stateMesh) {
    
    var makeCircles = d3.select('svg').selectAll("circle").data(topo).enter()
    		.append("circle")
+   		.filter(function(d){return typeById[d.id];})
    		.each(function(it){
    			it.properties.r = sizeById[it.id]*2 + 13;
    			it.properties.c = path.centroid(it);
@@ -124,7 +125,7 @@ function draw(topo, stateMesh) {
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
    		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + colorClasses(typeById[it.id]);}else{return "county";}});
    
-   circles = d3.selectAll('circle');
+   circles = d3.selectAll('circle').filter(function(d){return typeById[d.id];});
 }
 //want to make filter objects, one set for colors, another for sizes
 function addRemoveCircles(selected, add){
@@ -166,6 +167,8 @@ function colorFilterBehavior(){
 		}
 		else{
 			switch(colorSelection.length){
+				case 8:
+				case 7:
 				case 6:
 					add = true;
 					typeButtons.classed("active", false);
