@@ -13,7 +13,7 @@ var typeById = {},
 	nameById = {},
 	sizeById = {};
 
-var topo,projection,path,svg,g;
+var topo,projection,path,svg,g, circles, colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
 
 var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
 
@@ -53,7 +53,7 @@ function setup(width,height){
 
   g = svg.append("g");
   
-  colorFilters();
+  colorFilterBehavior();
 
 }
 
@@ -124,23 +124,22 @@ function draw(topo, stateMesh) {
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
    		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + colorClasses(typeById[it.id]);}else{return "county";}});
    
+   circles = d3.selectAll('circle');
 }
 //want to make filter objects, one set for colors, another for sizes
-var selection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
-var circles = d3.selectAll('circle');
 function addRemoveCircles(selected, add){
 	if(add){
-		selection.push(selected);
+		colorSelection.push(selected);
 	}
 	else{
-		selection.splice(indexOf(selected), 1);
+		colorSelection.splice(colorSelection.indexOf(selected), 1);
 	}
 	
 	
 	circles.style('display', 'none');
 	
-	for(i=0; i<selection.length; i++){
-		var selectedFilter = selection[i].attr('id');
+	for(i=0; i<colorSelection.length; i++){
+		var selectedFilter = colorSelection[i];
 		circles.style("display", function(d){
 			if(colorClasses(typeById[d.id])===selectedFilter){
 				return 'inline';
@@ -152,27 +151,40 @@ function addRemoveCircles(selected, add){
 		});
 	}
 }
-function colorFilters(){
-	//would like to make it so that once a selected element becomes active, all other buttons in that cateogy become unselected
-	var typeButtons = d3.select("#typefilters").selectAll(".btn");
-	var add = true;
+function colorFilterBehavior(){
+	var typeButtons = d3.select("#typeFilters").selectAll(".btn");
+	console.log(typeButtons);
+	var selectAll = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
+	var add;
+	
 	typeButtons.on("click", function(){
 		var chosen = d3.select(this);
+		
 		if(!chosen.classed("active")){
+			add = true;
 			chosen.classed("active", true);
 		}
 		else{
-			if(selection.length===6){
-				typeButtons.classed("active", false);
-				chosen.classed("active", true);
-				selection = [];
+			switch(colorSelection.length){
+				case 6:
+					add = true;
+					typeButtons.classed("active", false);
+					chosen.classed("active", true);
+					colorSelection = [];
+					break;
+				case 1:
+					add = true;
+					typeButtons.classed("active", true);
+					colorSelection = selectAll;
+					break;
+				default:
+					chosen.classed("active", false);
+					add = false;
+					break;
 			}
-			else{
-				chosen.classed("active", false);
-				add = false;
-			}
+			
 		}
-		addRemoveCircles(chosen, add);
+		addRemoveCircles(chosen.attr('id'), add);
 	});
 	
 }
