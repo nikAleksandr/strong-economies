@@ -100,6 +100,9 @@ circle{
 	fill:none;
 	stroke-width: 0px;
 	stroke: none;
+	box-shadow: 0px 0px 2px 0px #a6a6a6; 
+ 	-mox-box-shadow: 0px 0px 2px 0px #a6a6a6; 
+	-webkit-box-shadow: 0px 0px 2px 0px #a6a6a6;   
 }
 .active{
 	stroke-width:1px;
@@ -178,13 +181,13 @@ circle{
  * Circle Size classes
  */
 .large{
-	r: 15;	
+	
 }
 .medium{
-	r:18;
+	
 }
 .small{
-	r:20;
+		
 }
 /*
  * Button and Header styles

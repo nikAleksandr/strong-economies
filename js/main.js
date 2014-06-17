@@ -13,7 +13,8 @@ var typeById = {},
 	nameById = {},
 	sizeById = {};
 
-var topo,projection,path,svg,g, circles, colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
+var topo,projection,path,svg,g;
+var circles;
 
 var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
 
@@ -54,6 +55,7 @@ function setup(width,height){
   g = svg.append("g");
   
   colorFilterBehavior();
+  sizeFilterBehavior();
 
 }
 
@@ -128,21 +130,21 @@ function draw(topo, stateMesh) {
    circles = d3.selectAll('circle').filter(function(d){return typeById[d.id];});
 }
 //want to make filter objects, one set for colors, another for sizes
-function addRemoveCircles(selected, add){
+function addRemoveCircles(selected, add, selection){
 	if(add){
-		colorSelection.push(selected);
+		selection.push(selected);
 	}
 	else{
-		colorSelection.splice(colorSelection.indexOf(selected), 1);
+		selection.splice(selection.indexOf(selected), 1);
 	}
 	
 	
 	circles.style('display', 'none');
 	
-	for(i=0; i<colorSelection.length; i++){
-		var selectedFilter = colorSelection[i];
+	for(i=0; i<selection.length; i++){
+		var selectedFilter = selection[i];
 		circles.style("display", function(d){
-			if(colorClasses(typeById[d.id])===selectedFilter){
+			if(colorClasses(typeById[d.id])===selectedFilter || sizeClasses(sizeById[d.id])===selectedFilter){
 				return 'inline';
 			}
 			else{
@@ -153,8 +155,8 @@ function addRemoveCircles(selected, add){
 	}
 }
 function colorFilterBehavior(){
+	var colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
 	var typeButtons = d3.select("#typeFilters").selectAll(".btn");
-	console.log(typeButtons);
 	var selectAll = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
 	var add;
 	
@@ -185,11 +187,46 @@ function colorFilterBehavior(){
 					add = false;
 					break;
 			}
-			
 		}
-		addRemoveCircles(chosen.attr('id'), add);
+		addRemoveCircles(chosen.attr('id'), add, colorSelection);
 	});
+}
+function sizeFilterBehavior(){
+	var popSelection = ['large', 'medium', 'small'];
+	var popButtons = d3.select("#popFilters").selectAll(".btn");
+	var selectAll = ['large', 'medium', 'small'];
+	var add;
 	
+	popButtons.on("click", function(){
+		var chosen = d3.select(this);
+		
+		if(!chosen.classed("active")){
+			add = true;
+			chosen.classed("active", true);
+		}
+		else{
+			switch(popSelection.length){
+				case 5:
+				case 4:
+				case 3:
+					add = true;
+					popButtons.classed("active", false);
+					chosen.classed("active", true);
+					popSelection = [];
+					break;
+				case 1:
+					add = true;
+					popButtons.classed("active", true);
+					popSelection = selectAll;
+					break;
+				default:
+					chosen.classed("active", false);
+					add = false;
+					break;
+			}
+		}
+		addRemoveCircles(chosen.attr('id'), add, popSelection);
+	});
 }
 
 function redraw() {
