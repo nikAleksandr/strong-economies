@@ -105,8 +105,11 @@ circle{
 	stroke-width:1px;
 	stroke:rgb(255,0,0);	
 }
-.btn.active{
+.btn{
 	opacity:.5;
+}
+.btn.active{
+	opacity:1;
 }
 #state-borders{
 	stroke:#fff;

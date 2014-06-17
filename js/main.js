@@ -126,22 +126,53 @@ function draw(topo, stateMesh) {
    
 }
 //want to make filter objects, one set for colors, another for sizes
-var buttons;
+var selection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
+var circles = d3.selectAll('circle');
+function addRemoveCircles(selected, add){
+	if(add){
+		selection.push(selected);
+	}
+	else{
+		selection.splice(indexOf(selected), 1);
+	}
+	
+	
+	circles.style('display', 'none');
+	
+	for(i=0; i<selection.length; i++){
+		var selectedFilter = selection[i].attr('id');
+		circles.style("display", function(d){
+			if(colorClasses(typeById[d.id])===selectedFilter){
+				return 'inline';
+			}
+			else{
+				var currentCircle = d3.select(this);
+				return currentCircle.style();
+			}
+		});
+	}
+}
 function colorFilters(){
 	//would like to make it so that once a selected element becomes active, all other buttons in that cateogy become unselected
-	buttons = d3.select("#filters").selectAll(".btn");
-	
-	buttons.on("click", function(){
-		var selection = d3.select(this);
-		if(!selection.classed("active")){
-			selection.classed("active", true);
-			var selectedFilter = selection.attr('id');
-			var circles = d3.selectAll('circle')
-				.style("display", function(d){if(!colorClasses(typeById[d.id])===selectedFilter){return 'none';}else{}});
+	var typeButtons = d3.select("#typefilters").selectAll(".btn");
+	var add = true;
+	typeButtons.on("click", function(){
+		var chosen = d3.select(this);
+		if(!chosen.classed("active")){
+			chosen.classed("active", true);
 		}
 		else{
-			selection.classed("active", false);
+			if(selection.length===6){
+				typeButtons.classed("active", false);
+				chosen.classed("active", true);
+				selection = [];
+			}
+			else{
+				chosen.classed("active", false);
+				add = false;
+			}
 		}
+		addRemoveCircles(chosen, add);
 	});
 	
 }
