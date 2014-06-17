@@ -1,8 +1,10 @@
 d3.select(window).on("resize", throttle);
 
+/*
 var zoom = d3.behavior.zoom()
     .scaleExtent([1, 8])
     .on("zoom", move);
+   */
 
 var width = document.getElementById('container').offsetWidth-60;
 var height = width / 2;
@@ -46,8 +48,8 @@ function setup(width,height){
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-      .call(zoom);
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+      //.call(zoom);
 
   g = svg.append("g");
   
@@ -126,11 +128,20 @@ function draw(topo, stateMesh) {
 //want to make filter objects, one set for colors, another for sizes
 var buttons;
 function colorFilters(){
+	//would like to make it so that once a selected element becomes active, all other buttons in that cateogy become unselected
 	buttons = d3.select("#filters").selectAll(".btn");
 	
 	buttons.on("click", function(){
-		var selectedFilter = this.id;
-		d3.selectAll('circle').style("display", function(){ if(classed(selectedFilter)){return 'none';}});
+		var selection = d3.select(this);
+		if(!selection.classed("active")){
+			selection.classed("active", true);
+			var selectedFilter = selection.attr('id');
+			var circles = d3.selectAll('circle')
+				.style("display", function(d){if(!colorClasses(typeById[d.id])===selectedFilter){return 'none';}else{}});
+		}
+		else{
+			selection.classed("active", false);
+		}
 	});
 	
 }
@@ -143,7 +154,7 @@ function redraw() {
   draw(topo);
 }
 
-function move() {
+/*function move() {
 
   var t = d3.event.translate;
   var s = d3.event.scale;  
@@ -156,7 +167,7 @@ function move() {
   g.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
 
 }
-
+*/
 var throttleTimer;
 function throttle() {
   window.clearTimeout(throttleTimer);
