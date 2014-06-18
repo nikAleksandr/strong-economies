@@ -1,3 +1,13 @@
+/*
+ * to add
+ * -	Highlight()
+-	doubleClicked(linkById[d.id])
+-	displayTooltip() – executeSearchMatch()
+-	linkById[d.id]
+
+ * 
+ */
+
 d3.select(window).on("resize", throttle);
 
 /*
@@ -6,7 +16,7 @@ var zoom = d3.behavior.zoom()
     .on("zoom", move);
    */
 
-var width = document.getElementById('container').offsetWidth-60;
+var width = document.getElementById('mapContainer').offsetWidth-60;
 var height = width / 2;
 
 var typeById = {},
@@ -98,8 +108,8 @@ function draw(topo, stateMesh) {
 		.attr("d", path);
   
   //ofsets plus width/height of transform, plsu 20 px of padding, plus 20 extra for tooltip offset off mouse
-  var offsetL = document.getElementById('container').offsetLeft+(width/2)+40;
-  var offsetT =document.getElementById('container').offsetTop+(height/2)+20;
+  var offsetL = document.getElementById('mapContainer').offsetLeft+(width/2)+40;
+  var offsetT =document.getElementById('mapContainer').offsetTop+(height/2)+20;
 
   //tooltips
   county
@@ -203,7 +213,7 @@ function addRemoveCircles(selected, add, selection, otherSelection){
 					//console.log("either " + colorClasses(typeById[d.id]) + " matched " + selectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + selectedFilter);
 					if(sizeClasses(sizeById[d.id])===otherSelectedFilter || colorClasses(typeById[d.id])===otherSelectedFilter){
 						//console.log("either " + colorClasses(typeById[d.id]) + " matched " + otherSelectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + otherSelectedFilter);
-						console.log("matched " + selectedFilter + " : " + otherSelectedFilter);
+						//console.log("matched " + selectedFilter + " : " + otherSelectedFilter);
 						return 'inline';
 					}
 					else{
@@ -313,7 +323,7 @@ function highlight(d) {
 	}*/
 }
 function redraw() {
-  width = document.getElementById('container').offsetWidth-60;
+  width = document.getElementById('mapContainer').offsetWidth-60;
   height = width / 2;
   d3.select('svg').remove();
   setup(width,height);
