@@ -127,7 +127,7 @@ function draw(topo, stateMesh) {
    		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] ;})
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
-   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + colorClasses(typeById[it.id]);}else{return "county";}});
+   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + colorClasses(typeById[it.id]) + " active";}else{return "county";}});
    
    circles = d3.selectAll('circle').filter(function(d){return typeById[d.id];});
    
@@ -293,6 +293,7 @@ function sizeFilterBehavior(){
 }
 function highlight(d) {
 	//if (clickedCircle === d) tooltip.classed('hidden', true);
+	circles.classed("active", false);
 	
 	if (d && clickedCircle !== d) {
 		clickedCircle = d;
@@ -302,6 +303,7 @@ function highlight(d) {
 	
 	circles
       .classed("active", clickedCircle && function(d) { return d === clickedCircle; });
+    if(clickedCircle === null)circles.classed("active", true);
 	
 	/*if (frmrActive) frmrActive.style("fill", frmrFill);	
 	frmrActive = d3.select(".active");
