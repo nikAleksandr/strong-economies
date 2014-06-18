@@ -144,15 +144,15 @@ function addRemoveCircles(selected, add, selection, otherSelection){
 	circles.style('display', 'none');
 	
 	for(i=0; i<selection.length; i++){
-		var selectedFilter = selection[i];
-		circles.style("display", function(d){
-			if(colorClasses(typeById[d.id])===selectedFilter || sizeClasses(sizeById[d.id])===selectedFilter){
-				//console.log("either " + colorClasses(typeById[d.id]) + " matched " + selectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + selectedFilter);
-				for(j=0; j<otherSelection.length; j++){
-					var otherSelectedFilter = otherSelection[j];
+		for(j=0; j<otherSelection.length; j++){
+			var otherSelectedFilter = otherSelection[j];
+			var selectedFilter = selection[i];
+			circles.style("display", function(d){
+				if(colorClasses(typeById[d.id])===selectedFilter || sizeClasses(sizeById[d.id])===selectedFilter){
+					//console.log("either " + colorClasses(typeById[d.id]) + " matched " + selectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + selectedFilter);
 					if(sizeClasses(sizeById[d.id])===otherSelectedFilter || colorClasses(typeById[d.id])===otherSelectedFilter){
-						console.log("either " + colorClasses(typeById[d.id]) + " matched " + otherSelectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + otherSelectedFilter);
-						//console.log("matched " + selectedFilter + " : " + otherSelectedFilter);
+						//console.log("either " + colorClasses(typeById[d.id]) + " matched " + otherSelectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + otherSelectedFilter);
+						console.log("matched " + selectedFilter + " : " + otherSelectedFilter);
 						return 'inline';
 					}
 					else{
@@ -160,12 +160,12 @@ function addRemoveCircles(selected, add, selection, otherSelection){
 						return currentCircle.style();
 					}
 				}
-			}
-			else{
-				var currentCircle = d3.select(this);
-				return currentCircle.style();
-			}
-		});
+				else{
+					var currentCircle = d3.select(this);
+					return currentCircle.style();
+				}
+			});
+		}
 	}
 }
 function colorFilterBehavior(){
