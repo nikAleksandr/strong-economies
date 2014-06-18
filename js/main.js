@@ -15,7 +15,9 @@ var typeById = {},
 
 var topo,projection,path,svg,g;
 var circles;
-
+var colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
+var popSelection = ['large', 'medium', 'small'];
+  
 var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
 
 var	colorClasses = d3.scale.threshold()
@@ -130,7 +132,7 @@ function draw(topo, stateMesh) {
    circles = d3.selectAll('circle').filter(function(d){return typeById[d.id];});
 }
 //want to make filter objects, one set for colors, another for sizes
-function addRemoveCircles(selected, add, selection){
+function addRemoveCircles(selected, add, selection, otherSelection){
 	if(add){
 		selection.push(selected);
 	}
@@ -138,14 +140,26 @@ function addRemoveCircles(selected, add, selection){
 		selection.splice(selection.indexOf(selected), 1);
 	}
 	
-	
+	//console.log(selection + " : " + otherSelection);
 	circles.style('display', 'none');
 	
 	for(i=0; i<selection.length; i++){
 		var selectedFilter = selection[i];
 		circles.style("display", function(d){
 			if(colorClasses(typeById[d.id])===selectedFilter || sizeClasses(sizeById[d.id])===selectedFilter){
-				return 'inline';
+				//console.log("either " + colorClasses(typeById[d.id]) + " matched " + selectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + selectedFilter);
+				for(j=0; j<otherSelection.length; j++){
+					var otherSelectedFilter = otherSelection[j];
+					if(sizeClasses(sizeById[d.id])===otherSelectedFilter || colorClasses(typeById[d.id])===otherSelectedFilter){
+						console.log("either " + colorClasses(typeById[d.id]) + " matched " + otherSelectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + otherSelectedFilter);
+						//console.log("matched " + selectedFilter + " : " + otherSelectedFilter);
+						return 'inline';
+					}
+					else{
+						var currentCircle = d3.select(this);
+						return currentCircle.style();
+					}
+				}
 			}
 			else{
 				var currentCircle = d3.select(this);
@@ -155,7 +169,6 @@ function addRemoveCircles(selected, add, selection){
 	}
 }
 function colorFilterBehavior(){
-	var colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
 	var typeButtons = d3.select("#typeFilters").selectAll(".btn");
 	var selectAll = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
 	var add;
@@ -188,11 +201,10 @@ function colorFilterBehavior(){
 					break;
 			}
 		}
-		addRemoveCircles(chosen.attr('id'), add, colorSelection);
+		addRemoveCircles(chosen.attr('id'), add, colorSelection, popSelection);
 	});
 }
 function sizeFilterBehavior(){
-	var popSelection = ['large', 'medium', 'small'];
 	var popButtons = d3.select("#popFilters").selectAll(".btn");
 	var selectAll = ['large', 'medium', 'small'];
 	var add;
@@ -225,7 +237,7 @@ function sizeFilterBehavior(){
 					break;
 			}
 		}
-		addRemoveCircles(chosen.attr('id'), add, popSelection);
+		addRemoveCircles(chosen.attr('id'), add, popSelection, colorSelection);
 	});
 }
 
