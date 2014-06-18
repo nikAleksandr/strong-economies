@@ -105,8 +105,8 @@ circle{
 	-webkit-box-shadow: 0px 0px 2px 0px #a6a6a6;   
 }
 .active{
-	stroke-width:1px;
-	stroke:rgb(255,0,0);	
+	stroke-width:3px;
+	stroke:rgb(255,0,0);
 }
 .btn{
 	opacity:.5;

@@ -14,7 +14,7 @@ var typeById = {},
 	sizeById = {};
 
 var topo,projection,path,svg,g;
-var circles;
+var circles, clickedCircle;
 var colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
 var popSelection = ['large', 'medium', 'small'];
   
@@ -127,35 +127,30 @@ function draw(topo, stateMesh) {
    		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] ;})
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
-   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + colorClasses(typeById[it.id]);}else{return "county";}})
-   		.on('click', clicked(d, i, this));
+   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + colorClasses(typeById[it.id]);}else{return "county";}});
    
    circles = d3.selectAll('circle').filter(function(d){return typeById[d.id];});
    
    // for click and double-click events; for touch devices, use click and double-tap 
 	var mdownTime = -1;
-	makeCircles.on('mousedown', function(d, i) {
+	circles.on('mousedown', function(d, i) {
 		mdownTime = $.now();
 	});
 
-	var inTransition = false;
 	var clicked = function(d, event) {
 		highlight(d);
 		if (d3.select('.active').empty() !== true) {
-			inTransition = true;
-			var transition = executeSearchMatch(event.target.id);
-			if (transition === false) inTransition = false;
-			else transition.each('end.bool', function() { inTransition = false; });
+			//displayTooltip(d);
 		}		
 	};
 	
 	
 	if ($('html').hasClass('no-touch')) {
-		county.each(function(d, i) {
+		circles.each(function(d) {
 			d.clickCount = 0;
 		});
 				
-		makeCircles.on('click', function(d, i) {
+		circles.on('click', function(d) {
 			if ($.now() - mdownTime < 300) {
 				d3.event.stopPropagation();
 				var event = d3.event;
@@ -164,27 +159,26 @@ function draw(topo, stateMesh) {
 				if (d.clickCount === 1) {
 					singleClickTimer = setTimeout(function() {
 						d.clickCount = 0;
-						if (!inTransition) clicked(d, event);
+						clicked(d, event);
 					}, 300);
 				} else if (d.clickCount === 2) {
 					clearTimeout(singleClickTimer);
 					d.clickCount = 0;
-					highlight(d);
-					doubleClicked(d.id);
+					doubleClicked(linkById[d.id]);
 				}
 			}
 		});
 	} else {
-		makeCircles.on('click', function(d, i) {
+		circles.on('click', function() {
 			if ($.now() - mdownTime < 300) {
 				d3.event.stopPropagation();
-				if (!inTransition) clicked(d, d3.event);
+				clicked(d, d3.event);
 			}
 		});
 		
 		$('.circle.hasData').addSwipeEvents().bind('doubletap', function(event, touch) {
 			event.stopPropagation();
-			doubleClicked(event.target.id);
+			doubleClicked(linkById[d.id]);
 		});
 	}
 }
@@ -297,7 +291,25 @@ function sizeFilterBehavior(){
 		addRemoveCircles(chosen.attr('id'), add, popSelection, colorSelection);
 	});
 }
-
+function highlight(d) {
+	//if (clickedCircle === d) tooltip.classed('hidden', true);
+	
+	if (d && clickedCircle !== d) {
+		clickedCircle = d;
+	  } else {
+	    clickedCircle = null;
+	  }
+	
+	circles
+      .classed("active", clickedCircle && function(d) { return d === clickedCircle; });
+	
+	/*if (frmrActive) frmrActive.style("fill", frmrFill);	
+	frmrActive = d3.select(".active");
+	if (frmrActive.empty() !== true) {
+		frmrFill = frmrActive.style("fill");
+		frmrActive.style("fill", null);
+	}*/
+}
 function redraw() {
   width = document.getElementById('container').offsetWidth-60;
   height = width / 2;
