@@ -128,7 +128,7 @@ function draw(topo, stateMesh) {
    		.append("circle")
    		.filter(function(d){return typeById[d.id];})
    		.each(function(it){
-   			it.properties.r = sizeById[it.id]*2 + 13;
+   			it.properties.r = 10;
    			it.properties.c = path.centroid(it);
    			it.properties.x = width/2;
    			it.properties.y = height/2;	
