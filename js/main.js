@@ -26,14 +26,24 @@ var typeById = {},
 	type5ById = {},
 	type6ById = {},
 	nameById = {},
-	sizeById = {};
+	sizeById = {},
+	pop2000ById = {},
+	pop2013ById = {},
+	popGrowthById = {},
+	jobs2000ById = {},
+	jobs2013ById = {},
+	jobsGrowthById = {},
+	incPerCapitaById = {},
+	unemById = {},
+	povById = {},
+	eduById = {};
 
 var topo,projection,path,svg,g;
 var circles, clickedCircle;
 var colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
 var popSelection = ['large', 'medium', 'small'];
   
-var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
+var countyStats = $("#countyStats").hide();
 
 var	typeClasses = d3.scale.threshold()
 	.domain([1,2,3,4,5,6,7])
@@ -92,6 +102,16 @@ d3.csv("data/EDMapData.csv", function (error, countyData) {
 	  	type6ById[d.id] = +d.TypeNum6; 
 	  	nameById[d.id] = d.countyState;
 	  	sizeById[d.id] = +d.CountySize;
+	  	pop2000ById = +d.pop2000;
+		pop2013ById = +d.pop2013;
+		popGrowthById = +d.popGrowth;
+		jobs2000ById = +d.jobs2000;
+		jobs2013ById = +d.jobs2013;
+		jobsGrowthById = +d.jobsGrowth;
+		incPerCapitaById = +d.incPerCap;
+		unemById = +d.unem;
+		povById = +d.pov;
+		eduById = +d.edu;
 	});
 	
 });
@@ -124,19 +144,6 @@ function draw(topo, stateMesh) {
   //ofsets plus width/height of transform, plsu 20 px of padding, plus 20 extra for tooltip offset off mouse
   var offsetL = document.getElementById('mapContainer').offsetLeft+(width/2)+40;
   var offsetT =document.getElementById('mapContainer').offsetTop+(height/2)+20;
-
-  //tooltips
-  county
-    .on("mousemove", function(d,i) {
-      var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
-        tooltip
-          .classed("hidden", false)
-          .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
-          .html(d.properties.name);
-      })
-      .on("mouseout",  function(d,i) {
-        tooltip.classed("hidden", true);
-      }); 
    
    var makeCircles = d3.select('svg').selectAll("circle").data(topo).enter()
    		.append("circle")
@@ -165,7 +172,7 @@ function draw(topo, stateMesh) {
 	var clicked = function(d, event) {
 		highlight(d);
 		if (d3.select('.active').empty() !== true) {
-			//displayTooltip(d);
+			populateStats(d);
 		}		
 	};
 	
@@ -260,9 +267,6 @@ function colorFilterBehavior(){
 			chosen.classed("active", true);
 		}
 		else{
-			/*if(colorSelection.length>5){
-				colorSelection = selectAll;
-			}*/
 			switch(colorSelection.length){
 				case 6:
 					add = true;
@@ -320,6 +324,15 @@ function sizeFilterBehavior(){
 		addRemoveCircles(chosen.attr('id'), add, popSelection, colorSelection);
 	});
 }
+function populateStats(d){
+	var countyStatRow = d3.select
+	var pop2000,
+		popGrowth,
+		pop2013;
+	
+	countyStats.show();
+}
+
 function highlight(d) {
 	//if (clickedCircle === d) tooltip.classed('hidden', true);
 	circles.classed("active", false);

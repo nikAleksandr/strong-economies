@@ -10,11 +10,12 @@
         <!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
 
         <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.7.1.min.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <script src="http://d3js.org/d3.v3.min.js"></script>
 		<script src="http://d3js.org/topojson.v1.min.js"></script>
+        <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
         <div id="container" class="container-fluid">
@@ -31,29 +32,58 @@
 			<div id="usStats-title" class="row" style="text-align:center;"><h4>United States</h4></div>
 			<div id="usStats" class="row">
 				<div class="col-md-3">
-					Population
-					
+					<p class="statTitle">Population</p>
+					<div class="col-md-4 statContainer oldVal"><strong>2000</strong><br/>281,424,600</div>
+					<div class="col-md-4 statContainer growth">
+						<img class="up" height="15px" src="img/Arrow.svg"/>
+						<br/>
+						<span class="growthDir">+</span>0.9<span class="unit">&#37/year</span>
+					</div>
+					<div class="col-md-4 statContainer newVal"><strong>2013</strong><br/>316,128,839</div>
 				</div>
-				<div class="col-md-3">Jobs</div>
-				<div class="col-md-1">Income Per Capita</div>
-				<div class="col-md-1">Unemployment Rate</div>
-				<div class="col-md-1">Poverty</div>
-				<div class="col-md-1">Education</div>
+				<div class="col-md-3">
+					<p class="statTitle">Jobs</p>
+					<div class="col-md-4 statContainer oldVal"><strong>2000</strong><br/>131,137,819</div>
+					<div class="col-md-4 statContainer growth">
+						<img class="up" height="15px" src="img/Arrow.svg"/>
+						<br/>
+						<span class="growthDir">+</span>0.2<span class="unit">&#37/year</span>
+					</div>
+					<div class="col-md-4 statContainer newVal"><strong>2013</strong><br/>134,957,493</div>
+				</div>
+				<div class="col-md-6">
+					<div class="col-md-3">
+						<p class="statTitle">Income</p>
+						<div class="statContainer val"><span class"unit">$</span>43,735</div>
+					</div>
+					<div class="col-md-3">
+						<p class="statTitle">Unemployment</p>
+						<div class="statContainer val">10<span class="unit">&#37</span></div>
+					</div>
+					<div class="col-md-3">
+						<p class="statTitle">Poverty</p>
+						<div class="statContainer val">10<span class="unit">&#37</span></div>
+					</div>
+					<div class="col-md-3">
+						<p class="statTitle">Education</p>
+						<div class="statContainer val">36<span class="unit">&#37</span></div>
+					</div>
+				</div>
 			</div>
-			<div style="display:none;" id="countyStats" class="row">
+			<hr/>
+			<div id="countyStats" class="row">
 				<div class="col-md-3">Population</div>
 				<div class="col-md-3">Jobs</div>
-				<div class="col-md-1">Income Per Capita</div>
-				<div class="col-md-1">Unemployment Rate</div>
+				<div class="col-md-2">Income Per Capita</div>
+				<div class="col-md-2">Unemployment Rate</div>
 				<div class="col-md-1">Poverty</div>
 				<div class="col-md-1">Education</div>
 			</div>
 		</div>
-		<hr/>
 		<div id="centerContainer" class="container-fluid">
 			<div class="row">
 				<div id="mapContainer" class="col-md-10"><div id="map"></div></div>
-				<div class="col-md-2">Jobs Breakdown</div>
+				<div class="col-md-2"><br/><br/>Jobs Breakdown</div>
 			</div>
 		</div>
 		<div id="filters" class="container">
