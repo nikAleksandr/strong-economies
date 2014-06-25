@@ -20,6 +20,11 @@ var width = document.getElementById('mapContainer').offsetWidth-60;
 var height = width / 2;
 
 var typeById = {},
+	type2ById = {},
+	type3ById = {},
+	type4ById = {},
+	type5ById = {},
+	type6ById = {},
 	nameById = {},
 	sizeById = {};
 
@@ -30,9 +35,13 @@ var popSelection = ['large', 'medium', 'small'];
   
 var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
 
-var	colorClasses = d3.scale.threshold()
+var	typeClasses = d3.scale.threshold()
 	.domain([1,2,3,4,5,6,7])
 	.range(['noData', 'workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region']);
+	
+var	color = d3.scale.threshold()
+	.domain([1,2,3,4,5,6,7])
+	.range(['none', 'rgb(253,156,2)', 'rgb(0,153,209)', 'rgb(70,200,245)', 'rgb(254,207,47)', 'rgb(102,204,204)', 'rgb(69,178,157)']);
 
 function sizeClasses(d){
 	switch(d){
@@ -75,7 +84,12 @@ d3.csv("data/EDMapData.csv", function (error, countyData) {
 	data = countyData;
 	
 	countyData.forEach(function(d) { 
-	  	typeById[d.id] = +d.TypeNum; 
+	  	typeById[d.id] = +d.TypeNum;
+	  	type2ById[d.id] = +d.TypeNum2;
+	  	type3ById[d.id] = +d.TypeNum3; 
+	  	type4ById[d.id] = +d.TypeNum4; 
+	  	type5ById[d.id] = +d.TypeNum5; 
+	  	type6ById[d.id] = +d.TypeNum6; 
 	  	nameById[d.id] = d.countyState;
 	  	sizeById[d.id] = +d.CountySize;
 	});
@@ -101,7 +115,7 @@ function draw(topo, stateMesh) {
       .attr("class", "county")
       .attr("d", path)
       .attr("id", function(d,i) { return d.id; })
-      .attr("class", function(d){if(!isNaN(typeById[d.id])){return "county " + "hasData "+ colorClasses(typeById[d.id]);}else{return "county";}});
+      .attr("class", function(d){if(!isNaN(typeById[d.id])){return "county " + "hasData "+ typeClasses(typeById[d.id]);}else{return "county";}});
 
   g.append("path").datum(stateMesh)
 		.attr("id", "state-borders")
@@ -132,12 +146,13 @@ function draw(topo, stateMesh) {
    			it.properties.c = path.centroid(it);
    			it.properties.x = width/2;
    			it.properties.y = height/2;	
-   			//it.properties.class = color(typeById[it.id]);
+   			it.properties.fill = color(typeById[it.id]);
    		})
    		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] ;})
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
-   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + colorClasses(typeById[it.id]) + " active";}else{return "county";}});
+   		.style("fill", function(it) {if(!isNaN(typeById[it.id])){return color(typeById[it.id]);}else{return 'none';}})
+   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + typeClasses(typeById[it.id]) + " "+ typeClasses(type2ById[it.id]) + " active";}else{return "circle";}});
    
    circles = d3.selectAll('circle').filter(function(d){return typeById[d.id];});
    
@@ -198,7 +213,10 @@ function addRemoveCircles(selected, add, selection, otherSelection){
 		selection.push(selected);
 	}
 	else{
-		selection.splice(selection.indexOf(selected), 1);
+		if(selection.length===6){}
+		else{
+			selection.splice(selection.indexOf(selected), 1);
+		}
 	}
 	
 	//console.log(selection + " : " + otherSelection);
@@ -209,10 +227,10 @@ function addRemoveCircles(selected, add, selection, otherSelection){
 			var otherSelectedFilter = otherSelection[j];
 			var selectedFilter = selection[i];
 			circles.style("display", function(d){
-				if(colorClasses(typeById[d.id])===selectedFilter || sizeClasses(sizeById[d.id])===selectedFilter){
-					//console.log("either " + colorClasses(typeById[d.id]) + " matched " + selectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + selectedFilter);
-					if(sizeClasses(sizeById[d.id])===otherSelectedFilter || colorClasses(typeById[d.id])===otherSelectedFilter){
-						//console.log("either " + colorClasses(typeById[d.id]) + " matched " + otherSelectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + otherSelectedFilter);
+				if(typeClasses(typeById[d.id])===selectedFilter || typeClasses(type2ById[d.id])===selectedFilter || sizeClasses(sizeById[d.id])===selectedFilter){
+					//console.log("either " + typeClasses(typeById[d.id]) + " matched " + selectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + selectedFilter);
+					if(sizeClasses(sizeById[d.id])===otherSelectedFilter || typeClasses(typeById[d.id])===otherSelectedFilter || typeClasses(type2ById[d.id])===selectedFilter){
+						//console.log("either " + typeClasses(typeById[d.id]) + " matched " + otherSelectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + otherSelectedFilter);
 						//console.log("matched " + selectedFilter + " : " + otherSelectedFilter);
 						return 'inline';
 					}
@@ -242,9 +260,10 @@ function colorFilterBehavior(){
 			chosen.classed("active", true);
 		}
 		else{
+			/*if(colorSelection.length>5){
+				colorSelection = selectAll;
+			}*/
 			switch(colorSelection.length){
-				case 8:
-				case 7:
 				case 6:
 					add = true;
 					typeButtons.classed("active", false);
@@ -252,7 +271,7 @@ function colorFilterBehavior(){
 					colorSelection = [];
 					break;
 				case 1:
-					add = true;
+					add = false;
 					typeButtons.classed("active", true);
 					colorSelection = selectAll;
 					break;

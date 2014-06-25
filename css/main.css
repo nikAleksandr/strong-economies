@@ -103,16 +103,18 @@ circle{
 	box-shadow: 0px 0px 2px 0px #a6a6a6; 
  	-mox-box-shadow: 0px 0px 2px 0px #a6a6a6; 
 	-webkit-box-shadow: 0px 0px 2px 0px #a6a6a6;  
-	opacity:.5; 
+	opacity:.35; 
 }
 .active{
 	opacity:1;
 }
 .btn{
-	opacity:.5;
+	opacity:.35;
 }
 .btn.active{
 	opacity:1;
+	stroke-width: .8px;
+	stroke: #000;
 }
 #state-borders{
 	stroke:#fff;
@@ -135,47 +137,55 @@ circle{
 .noData{
 	fill: rgb(201,201,201);
 }
+/*
 .workforce{
 	fill: rgb(253,156,2);
 }
-#workforce{
-	background-color: rgb(253,156,2);
-	color: #fff;
-}
+
 .stratPlan{
 	fill: rgb(0,153,209);
 }
-#stratPlan{
-	background-color:rgb(0,153,209);
-	color:#fff;
-}
+
 .entrep{
 	fill: rgb(70,200,245);
 }
-#entrep{
-	background-color: rgb(70,200,245);
-	color:#fff;
-}
+
 .inter{
 	fill: rgb(254,207,47);
 }
-#inter{
-	background-color: rgb(254,207,47);
-	color:#fff;
-}
+
 .infra{
 	fill:rgb(102,204,204);
+}
+
+.region{
+	fill:rgb(69,178,157);
+}
+
+*/
+#region{
+	background-color:rgb(69,178,157);
+	color:#fff;
 }
 #infra{
 	background-color:rgb(102,204,204);
 	color:#fff;
 }
-.region{
-	fill:rgb(69,178,157);
-}
-#region{
-	background-color:rgb(69,178,157);
+#inter{
+	background-color: rgb(254,207,47);
 	color:#fff;
+}
+#entrep{
+	background-color: rgb(70,200,245);
+	color:#fff;
+}
+#stratPlan{
+	background-color:rgb(0,153,209);
+	color:#fff;
+}
+#workforce{
+	background-color: rgb(253,156,2);
+	color: #fff;
 }
 /*
  * Circle Size classes
