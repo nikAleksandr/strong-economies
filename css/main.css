@@ -138,8 +138,18 @@ circle{
 .statContainer, .statTitle{
 	text-align: center;
 }
-.statTitle{
+.statTitle, .middleTitles{
 	font-size:1.2em;
+	text-align:center;
+	font-weight:200;
+}
+.middleTitles{
+	display:inline;
+	padding-top:8px;
+	padding-bottom:8px;
+}
+.statTitle{
+	display:none;
 }
 .oldVal{
 	text-align:left;
@@ -335,6 +345,18 @@ circle{
 
 @media only screen and (min-width: 35em) {
     /* Style adjustments for viewports that meet the condition */
+}
+
+@media (max-width: 750px){
+	.middleTitles{
+		display:none;
+	}
+	.statTitle{
+		display:inline;
+	}
+	#usStats>.col-md-3, #usStats>.col-md-6, #countyStats>.col-md-3, #countyStats>.col-md-6{
+		clear:left;
+	}
 }
 
 @media print,

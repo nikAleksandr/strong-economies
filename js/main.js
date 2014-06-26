@@ -1,13 +1,3 @@
-/*
- * to add
- * -	Highlight()
--	doubleClicked(linkById[d.id])
--	displayTooltip() – executeSearchMatch()
--	linkById[d.id]
-
- * 
- */
-
 d3.select(window).on("resize", throttle);
 
 /*
@@ -44,6 +34,7 @@ var colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'reg
 var popSelection = ['large', 'medium', 'small'];
   
 var countyStats = $("#countyStats").hide();
+var countyTitle = $('#countyStats-title').hide();
 
 var	typeClasses = d3.scale.threshold()
 	.domain([1,2,3,4,5,6,7])
@@ -52,6 +43,37 @@ var	typeClasses = d3.scale.threshold()
 var	color = d3.scale.threshold()
 	.domain([1,2,3,4,5,6,7])
 	.range(['none', 'rgb(253,156,2)', 'rgb(0,153,209)', 'rgb(70,200,245)', 'rgb(254,207,47)', 'rgb(102,204,204)', 'rgb(69,178,157)']);
+
+// formatting for the tooltip
+var format = {
+	"percent": function(num, type){
+		if(type === 'growth') return d3.format('+.1%')(num);
+		else return d3.format('.1%')(num);
+	},
+	"binary": function (num) { return num; },
+	"categorical": function (num) { return num; },
+	"level": function (num, type) {
+		if (type === 'year') return num;
+    	else if (num >= 1000000000) {
+    		var formatted = String((num/1000000000).toFixed(1)) + " Bil";
+    		return (type === 'currency') ? '$' + formatted : formatted;
+    	} else if (num >= 1000000) {
+    		var formatted = String((num/1000000).toFixed(1)) + " Mil";
+    		return (type === 'currency') ? '$' + formatted : formatted;
+    	} else if (num >= 10000) {
+    		var formatted = String((num/1000).toFixed(1)) + "k";
+    		return (type === 'currency') ? '$' + formatted : formatted;
+    	} else if (num >= 100) {
+    		return (type === 'currency') ? d3.format('$,.0f')(num) : d3.format(',.0f')(num);
+    	} else if (num == 0) {
+    		return (type === 'currency') ? '$0' : 0;
+    	} else {
+    		if (type === 'currency') return d3.format('$.1f')(num);
+    		else if (type === 'persons') return d3.format('0f')(num);
+    		else return d3.format('.1f')(num);
+    	}
+    }
+};
 
 function sizeClasses(d){
 	switch(d){
@@ -100,18 +122,18 @@ d3.csv("data/EDMapData.csv", function (error, countyData) {
 	  	type4ById[d.id] = +d.TypeNum4; 
 	  	type5ById[d.id] = +d.TypeNum5; 
 	  	type6ById[d.id] = +d.TypeNum6; 
-	  	nameById[d.id] = d.countyState;
+	  	nameById[d.id] = d.CountyState;
 	  	sizeById[d.id] = +d.CountySize;
-	  	pop2000ById = +d.pop2000;
-		pop2013ById = +d.pop2013;
-		popGrowthById = +d.popGrowth;
-		jobs2000ById = +d.jobs2000;
-		jobs2013ById = +d.jobs2013;
-		jobsGrowthById = +d.jobsGrowth;
-		incPerCapitaById = +d.incPerCap;
-		unemById = +d.unem;
-		povById = +d.pov;
-		eduById = +d.edu;
+	  	pop2000ById[d.id] = +d.pop2000;
+		pop2013ById[d.id] = +d.pop2013;
+		popGrowthById[d.id] = +d.popGrowth;
+		jobs2000ById[d.id] = +d.jobs2000;
+		jobs2013ById[d.id] = +d.jobs2013;
+		jobsGrowthById[d.id] = +d.jobsGrowth;
+		incPerCapitaById[d.id] = +d.incPerCap;
+		unemById[d.id] = +d.unem;
+		povById[d.id] = +d.pov;
+		eduById[d.id] = +d.edu;
 	});
 	
 });
@@ -324,17 +346,41 @@ function sizeFilterBehavior(){
 		addRemoveCircles(chosen.attr('id'), add, popSelection, colorSelection);
 	});
 }
+var countyName = d3.select("#countyName"),
+	countyPop2000 = d3.select('#countyPop2000'),
+	countyPopGrowth = d3.select('#countyPopGrowth'),
+	countyPopArrow = d3.select('#countyPopArrow'),
+	countyPop2013 = d3.select('#countyPop2013'),
+	countyJobs2000 = d3.select('#countyJobs2000'),
+	countyJobsGrowth = d3.select('#countyJobsGrowth'),
+	countyJobsArrow = d3.select('#countyJobsArrow'),
+	countyJobs2013 = d3.select('#countyJobs2013'),
+	countyIncPerCap = d3.select('#countyIncPerCap'),
+	countyUnem = d3.select('#countyUnem'),
+	countyPov = d3.select('#countyPov'),
+	countyEdu = d3.select('#countyEdu');
 function populateStats(d){
-	var countyStatRow = d3.select
-	var pop2000,
-		popGrowth,
-		pop2013;
 	
-	countyStats.show();
+	countyName.html(nameById[d.id]);
+	countyPop2000.html(format['level'](pop2000ById[d.id], 'pop'));
+	countyPopGrowth.html(format['percent'](popGrowthById[d.id], 'growth'));
+	countyPop2013.html(format['level'](pop2013ById[d.id], 'pop'));
+		countyPopArrow.classed('up', popGrowthById[d.id]>0);
+	countyJobs2000.html(format['level'](jobs2000ById[d.id], 'jobs'));
+	countyJobsGrowth.html(format['percent'](jobsGrowthById[d.id], 'growth'));
+		countyJobsArrow.classed('up', jobsGrowthById[d.id]>0);
+	countyJobs2013.html(format['level'](jobs2013ById[d.id], 'jobs'));
+	countyIncPerCap.html(format['level'](incPerCapitaById[d.id], 'currency'));
+	countyUnem.html(format['percent'](unemById[d.id]));
+	countyPov.html(format['percent'](povById[d.id]));
+	countyEdu.html(format['percent'](eduById[d.id]));
+	
 }
 
 function highlight(d) {
-	//if (clickedCircle === d) tooltip.classed('hidden', true);
+	countyStats.show();
+	countyTitle.show();
+	
 	circles.classed("active", false);
 	
 	if (d && clickedCircle !== d) {
@@ -345,8 +391,13 @@ function highlight(d) {
 	
 	circles
       .classed("active", clickedCircle && function(d) { return d === clickedCircle; });
-    if(clickedCircle === null)circles.classed("active", true);
-	
+    if(clickedCircle === null){
+    	console.log('came back null');
+    	circles.classed("active", true); 
+    	countyStats.hide();
+    	countyTitle.hide();
+    }
+    
 	/*if (frmrActive) frmrActive.style("fill", frmrFill);	
 	frmrActive = d3.select(".active");
 	if (frmrActive.empty() !== true) {
