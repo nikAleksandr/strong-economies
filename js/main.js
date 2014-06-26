@@ -6,7 +6,7 @@ var zoom = d3.behavior.zoom()
     .on("zoom", move);
    */
 
-var width = document.getElementById('mapContainer').offsetWidth-60;
+var width = document.getElementById('mapContainer').offsetWidth;
 var height = width / 2;
 
 var typeById = {},
@@ -406,7 +406,7 @@ function highlight(d) {
 	}*/
 }
 function redraw() {
-  width = document.getElementById('mapContainer').offsetWidth-60;
+  width = document.getElementById('mapContainer').offsetWidth;
   height = width / 2;
   d3.select('svg').remove();
   setup(width,height);
