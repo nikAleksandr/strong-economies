@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="css/normalize.css">
         <script src="js/vendor/modernizr-2.7.1.min.js"></script>
         <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <script src="http://d3js.org/d3.v3.min.js"></script>
 		<script src="http://d3js.org/topojson.v1.min.js"></script>
@@ -25,11 +26,14 @@
 
         <!-- Add your site or application content here -->
 		<div id="header">
-			<h1>Strong Economies, Resilient Counties: <small style="color:#000;">The Role of Counties in Economic Development</small></h1>
-			<div style="text-align:center;" class="row">
-				<div class="col-md-4">Click on a county to see it's Economic stats.</div>
-				<div class="col-md-4">Use the filters to narrow your search.</div>
-				<div class="col-md-4">Double-click on a county to view or print an Economic Development Profile.</div>
+			<div class="row">
+				<div class="col-md-9" style="font-family:'Arvo', serif;"><h1>Strong Economies, Resilient Counties: <small style="color:#000;">The Role of Counties in Economic Development</small></h1></div>
+				<div class="col-md-3" id="nacoLogo"><img style="margin-top:10px;" height="55px" src="img/NACoLogo_NoTagBLACK_tm.png"/></div>	
+			</div>
+			<div style="margin-top:1em; margin-bottom:2em; text-align:center;" class="row">
+				<div class="col-md-4">Click on a county to see its economic profile data.</div>
+				<div class="col-md-4">Use the filters on the right-hand side to narrow your search.</div>
+				<div class="col-md-4">Double-click on a county to view or print a case study of the county government economic development initiatives.</div>
 			</div>
 		</div>
 		<hr/>
@@ -38,41 +42,38 @@
 				<div id="usStats-title" class="col-md-2" style="text-align:center;"><h4>United States</h4></div>
 				<div class="col-md-10">
 					<div class="col-md-2">
-						<p class="row statTitle">Population 2013</p>
+						<p class="row statTitle">Population, 2013</p>
 						<div class="row statContainer val">316.1 Mil</div>
 					</div>
 					<div class="col-md-2">
-						<p class="row statTitle">Jobs</p>
-						<div class="row statContainer val">
-							<img class="up" height="15px" src="img/Arrow.svg"/>
-							<span class="growthDir">+</span>0.2<span class="unit">&#37/year</span>
-						</div>
+						<p class="row statTitle">Employment, 2013</p>
+						<div class="row statContainer val">136.4 Mil</div>
 					</div>
 					<div class="col-md-2">
-						<p class="statTitle">Unemployment</p>
-						<div class="statContainer val">99.9<span class="unit">&#37</span></div>
+						<p class="statTitle">Unemployment Rate, April 2014</p>
+						<div class="statContainer val">6.3<span class="unit">&#37</span></div>
 					</div>
 					<div class="col-md-2">
-						<p class="statTitle">Income</p>
+						<p class="statTitle">Income Per Capita, 2013</p>
 						<div class="statContainer val"><span class"unit">$</span>43.7k</div>
 					</div>
 					<div class="col-md-2">
-						<p class="statTitle">Poverty</p>
-						<div class="statContainer val">99.9<span class="unit">&#37</span></div>
+						<p class="statTitle">Poverty Rate, 2012</p>
+						<div class="statContainer val">13.7<span class="unit">&#37</span></div>
 					</div>
 					<div class="col-md-2">
-						<p class="statTitle">Education</p>
-						<div class="statContainer val">99.9<span class="unit">&#37</span></div>
+						<p class="statTitle">Education, 2012</p>
+						<div class="statContainer val">28.5<span class="unit">&#37</span></div>
 					</div>
 				</div>
 			</div>
 			<div id="middleTitleRow" class="row">
 				<div class="col-md-2"></div>
 				<div class="col-md-10">
-					<div class="col-md-2 middleTitles">2013 Population</div>
-					<div class="col-md-2 middleTitles">Jobs Growth</div>
-					<div class="col-xs-2 middleTitles">Unemployment Rate</div>
-					<div class="col-xs-2 middleTitles">Income per Capita</div>
+					<div class="col-md-2 middleTitles">Population, 2013</div>
+					<div class="col-md-2 middleTitles">Employment, 2013</div>
+					<div class="col-xs-2 middleTitles">Unemployment Rate, April 2014</div>
+					<div class="col-xs-2 middleTitles">Income per Capita, 2013</div>
 					<div class="col-xs-2 middleTitles">Poverty Rate</div>
 					<div class="col-xs-2 middleTitles">Education</div>
 				</div>
@@ -81,15 +82,12 @@
 				<div id="countyStats-title" class="col-md-2" style="text-align:center;"><h4 id="countyName">United States</h4></div>
 				<div class="col-md-10">
 					<div class="col-md-2">
-						<p class="statTitle">Population</p>
+						<p class="statTitle">Population, 2013</p>
 						<div class="row statContainer val"><span id="countyPop2013">316,128,839</span></div>
 					</div>
 					<div class="col-md-2">
-						<p class="statTitle">Jobs</p>
-						<div class="row statContainer val">
-							<img id="countyJobsArrow" class="up" height="15px" src="img/Arrow.svg"/>
-							<span id="countyJobsGrowth">0.2</span><span class="unit">/year</span>
-						</div>
+						<p class="statTitle">Employment, 2013</p>
+						<div class="row statContainer val"><span id="countyJobs2013">136.4 Mil</span></div>
 					</div>
 					<div class="col-md-2">
 						<p class="statTitle">Unemployment</p>
@@ -113,9 +111,14 @@
 		</div>
 		<div id="centerContainer" class="container">
 			<div class="row">
-				<div id="mapContainer" class="col-md-9"><div id="map"></div></div>
+				<div id="mapContainer" class="col-md-9">
+					<div id="map"></div>
+					<div class="row">
+						<p id="byline">Brought to you by <a href="mailto:research@naco.org">NACo Research</a></p>
+					</div>		
+				</div>
 				<div class="col-md-3">
-					<h4>Filter on Economic Development Activity Type</h4>
+					<h4>Filter by Economic Development Activity Type</h4>
 					<div class="row" id="typeFilters">
 						<button type="button" id="workforce" class="btn btn-sm btn-block btn-default active">Workforce Development</button>
 						<button type="button" id="stratPlan" class="btn btn-sm btn-block btn-default active">Strategic Planning</button>
@@ -124,7 +127,7 @@
 						<button type="button" id="infra" class="btn btn-sm btn-block btn-default active">Infrastructure Investment</button>
 						<button type="button" id="region" class="btn btn-sm btn-block btn-default active">Regional Marketing and Branding</button>
 					</div>
-					<h4>Filter on population size</h4>
+					<h4>Filter by County Population Size</h4>
 					<div id="popFilters" class="row">
 						<button type="button" id="small" class="btn btn-default active">Small</button>
 						<button type="button" id="medium" class="btn btn-default active">Medium-sized</button>
@@ -133,7 +136,12 @@
 				</div>
 			</div>
 		</div>
-		
+		<div class="container">
+			<div id="underMap">
+				<p>The National Association of Counties (NACo) developed this research in partnership with the Lyndon B. Johnson (LBJ) School of Public Affairs at the University of Texas at Austin.</p>
+				<p><i>Source: </i> </p>
+			</div>
+		</div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
