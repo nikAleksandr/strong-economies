@@ -242,7 +242,7 @@ function addRemoveCircles(selected, add, selection, otherSelection, which){
 		selection.push(selected);
 	}
 	else{
-		if(which==='color' && selection.length===6 || which==='pop' & selection.length===3){console.log('keeping all ' + which);}
+		if(which==='color' && selection.length===6 || which==='pop' & selection.length===3){}
 		else{
 			selection.splice(selection.indexOf(selected), 1);
 		}
@@ -403,7 +403,6 @@ function highlight(d) {
 	circles
       .classed("active", clickedCircle && function(d) { return d === clickedCircle; });
     if(clickedCircle === null){
-    	console.log('came back null');
     	circles.classed("active", true); 
     	countyStats.hide();
     	countyTitle.hide();
