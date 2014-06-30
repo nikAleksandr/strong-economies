@@ -1,37 +1,37 @@
-id,County,State,CountyState,CountySize,EconDevType,TypeNum,TypeNum2,TypeNum3,TypeNum4,TypeNum5,TypeNum6,pop2000,pop2013,popGrowth,jobs2000,jobs2013,jobsGrowth,incPerCap,unem,pov,edu,ind1Name,ind1Share,ind2Name,ind2Share,ind3Name,ind3Share,ind4Name,ind4Share,ind5Name,ind5Share
-6001,Alameda County,CA,"Alameda County, CA",3,Workforce Development,1,6,,,,,1450220,1578891,0.006560459,708689,681714,-0.00298067,54683,0.057,0.115,0.411,,,,,,,,,,
-22005,Ascension Parish,LA,"Ascension Parish, LA",2,Strategic Planning,2,1,,,,,77335,114393,0.030572905,29806,40046,0.022976845,43881,0.038,0.094,0.233,,,,,,,,,,
-13015,Bartow County,GA,"Bartow County, GA",2,Workforce Development,1,3,,,,,76703,101273,0.021605398,30772,31227,0.001129708,29100,0.064,0.143,0.162,,,,,,,,,,
-35001,Bernalillo County,NM,"Bernalillo County, NM",3,Entrepreneurship and Small Business Support,3,6,,,,,557158,674221,0.014778061,311508,311203,-7.54E-05,37537,0.059,0.161,0.318,,,,,,,,,,
-13029,Bryan County,GA,"Bryan County, GA",1,Strategic Planning,2,4,,,,,23509,33157,0.026804527,4245,6475,0.033010594,41124,0.058,0.099,0.294,,,,,,,,,,
-51035,Carroll County,VA,"Carroll County, VA",1,Entrepreneurship and Small Business Support,3,2,,,,,29284,29883,0.001558788,6512,6044,-0.005720543,31180,0.063,0.178,0.121,,,,,,,,,,
-37035,Catawba County,NC,"Catawba County, NC",2,Strategic Planning,2,3,,,,,142515,154810,0.006385787,102254,80837,-0.017916414,34716,0.065,0.135,0.205,,,,,,,,,,
-39025,Clermont County,OH,"Clermont County, OH",2,Infrastructure Investment,5,6,,,,,178629,200218,0.008815223,49314,54578,0.007832271,38416,0.048,0.097,0.254,,,,,,,,,,
-41009,Columbia County,OR,"Columbia County, OR",1,Strategic Planning,2,1,,,,,43657,49344,0.009463929,10210,9896,-0.002399961,35427,0.074,0.13,0.174,,,,,,,,,,
-55025,Dane County,WI,"Dane County, WI",3,Workforce Development,1,2,,,,,428626,509939,0.013451699,275803,310280,0.009101808,49479,0.038,0.134,0.458,,,,,,,,,,
-8041,El Paso County,CO,"El Paso County, CO",3,Regional Marketing and Branding,6,4,,,,,519463,655044,0.017999052,240733,245137,0.001395496,40893,0.07,0.113,0.353,,,,,,,,,,
-51059,Fairfax County,VA,"Fairfax County, VA",3,International Economic Development Initiatives,4,5,,,,,974761,1130924,0.011496192,545298,586104,0.005566576,71607,0.036,0.052,0.582,,,,,,,,,,
-39049,Franklin County,OH,"Franklin County, OH",3,Entrepreneurship and Small Business Support,3,1,,,,,1072307,1212263,0.009481316,702867,692583,-0.001133173,42624,0.043,0.165,0.36,,,,,,,,,,
-30031,Gallatin County,MT,"Gallatin County, MT",2,Workforce Development,1,4,,,,,68369,94720,0.025394441,35983,49616,0.025020721,40000,0.034,0.146,0.454,,,,,,,,,,
-37083,Halifax County,NC,"Halifax County, NC",2,Entrepreneurship and Small Business Support,3,4,,,,,57238,53453,-0.005248888,19384,15857,-0.015330272,31433,0.09,0.227,0.117,,,,,,,,,,
-39061,Hamilton County,OH,"Hamilton County, OH",3,Entrepreneurship and Small Business Support,3,2,,,,,844316,804520,-0.003707035,568424,497642,-0.010177598,49413,0.048,0.156,0.332,,,,,,,,,,
-47065,Hamilton County,TN,"Hamilton County, TN",2,Entrepreneurship and Small Business Support,3,1,,,,,308103,348673,0.009560829,190894,187894,-0.001217745,41200,0.056,0.151,0.278,,,,,,,,,,
-48201,Harris County,TX,"Harris County, TX",3,Infrastructure Investment,5,2,,,,,3413678,4336853,0.018582755,1861030,2192332,0.012682497,52805,0.047,0.148,0.281,,,,,,,,,,
-20079,Harvey County,KS,"Harvey County, KS",1,Entrepreneurship and Small Business Support,3,2,,,,,32877,34741,0.004251104,13387,13773,0.002189013,40762,0.041,0.111,0.257,,,,,,,,,,
-51087,Henrico County,VA,"Henrico County, VA",2,Infrastructure Investment,5,3,,,,,263305,318611,0.014774063,166124,179540,0.005991998,46292,0.048,0.095,0.395,,,,,,,,,,
-12057,Hillsborough County,FL,"Hillsborough County, FL",3,International Economic Development Initiatives,4,5,,,,,1003269,1291578,0.019620858,588534,602960,0.001864518,40000,0.056,0.151,0.29,,,,,,,,,,
-6023,Humboldt County,CA,"Humboldt County, CA",2,Strategic Planning,2,1,,,,,126403,134493,0.004783477,50014,46007,-0.006403212,35681,0.074,0.21,0.264,,,,,,,,,,
-37105,Lee County,NC,"Lee County, NC",2,Workforce Development,1,4,,,,,49434,60266,0.015357475,27906,24316,-0.010536951,33332,0.08,0.151,0.2,,,,,,,,,,
-53041,Lewis County,WA,"Lewis County, WA",2,Entrepreneurship and Small Business Support,3,6,,,,,68618,75081,0.006948076,25198,23875,-0.004140078,32056,0.091,0.139,0.149,,,,,,,,,,
-26099,Macomb County,MI,"Macomb County, MI",3,Regional Marketing and Branding,6,2,,,,,790821,854769,0.005999433,336744,303342,-0.008003349,37664,0.076,0.109,0.222,,,,,,,,,,
-1089,Madison County,AL,"Madison County, AL",2,International Economic Development Initiatives,4,6,,,,,277868,346892,0.017213185,154837,181264,0.012195425,43102,0.055,0.116,0.378,,,,,,,,,,
-26139,Ottawa County,MI,"Ottawa County, MI",2,Workforce Development,1,4,,,,,239490,272701,0.010039623,121018,113459,-0.004949079,36663,0.05,0.11,0.293,,,,,,,,,,
-28081,PUL Alliance,MS,"PUL Alliance, MS",2,Regional Marketing and Branding,6,1,,,,,75960,85340,0.008996876,53042,50399,-0.003924028,36666,0.068,0.156,0.214,,,,,,,,,,
-27129,Renville County,MN,"Renville County, MN",1,Entrepreneurship and Small Business Support,3,6,,,,,17136,15166,-0.009350276,6215,5720,-0.006364042,52268,0.057,0.093,0.152,,,,,,,,,,
-6065,Riverside County,CA,"Riverside County, CA",3,International Economic Development Initiatives,4,2,,,,,1559109,2292507,0.030100394,471885,594490,0.017925583,31742,0.083,0.14,0.205,,,,,,,,,,
-42027,SEDA-COG,PA,"SEDA-COG, PA",2,Infrastructure Investment,5,5,,,,,135930,155403,0.010351805,63019,67343,0.005117874,40894,0.035,0.242,0.399,,,,,,,,,,
-29213,Taney County,MO,"Taney County, MO",2,Strategic Planning,2,6,,,,,39937,53575,0.022855688,25910,29894,0.011062962,27861,0.077,0.155,0.19,,,,,,,,,,
-48439,Tarrant County,TX,"Tarrant County, TX",3,Strategic Planning,2,4,,,,,1454402,1911541,0.021246789,708219,812634,0.010635191,43044,0.047,0.126,0.291,,,,,,,,,,
-54097,Upshur County,WV,"Upshur County, WV",1,Infrastructure Investment,5,2,,,,,23411,24665,0.004021854,7887,7934,0.000457142,31200,0.056,0.163,0.154,,,,,,,,,,
-49049,Utah County,UT,"Utah County, UT",3,Workforce Development,1,5,,,,,371648,551891,0.030882927,145309,190069,0.020870549,27624,0.03,0.156,0.357,,,,,,,,,,
-99999,United States,US,United States,,,,,,,,,"281,424,600","316,128,839",0.90%,"131,137,819","134,957,493",0.20%,"43,735",0.1,0.1,1,,,,,,,,,,
+id,County,State,CountyState,CountySize,EconDevType,TypeNum,TypeNum2,TypeNum3,TypeNum4,TypeNum5,TypeNum6,pop2000,pop2013,popGrowth,jobs2000,jobs2013,jobsGrowth,incPerCap,unem,pov,edu
+6001,Alameda County,CA,"Alameda County, CA",3,Workforce Development,1,3,5,,,,1450220,1578891,0.006560459,708689,678091,-0.00298067,54683,5.7,11.5,41.1
+22005,Ascension Parish,LA,"Ascension Parish, LA",2,Strategic Planning,2,,,,,,77335,114393,0.030572905,29806,40046,0.022976845,43881,0.038,0.094,0.233
+13015,Bartow County,GA,"Bartow County, GA",2,Workforce Development,1,3,6,,,,76703,101273,0.021605398,30772,31227,0.001129708,29100,0.064,0.143,0.162
+35001,Bernalillo County,NM,"Bernalillo County, NM",3,Entrepreneurship and Small Business Support,3,3,6,,,,557158,674221,0.014778061,311508,311203,-7.54E-05,37537,0.059,0.161,0.318
+13029,Bryan County,GA,"Bryan County, GA",1,Strategic Planning,3,5,6,,,,23509,33157,0.026804527,4245,6475,0.033010594,41124,0.058,0.099,0.294
+51035,Carroll County,VA,"Carroll County, VA",1,Entrepreneurship and Small Business Support,3,5,6,,,,29284,29883,0.001558788,6512,6044,-0.005720543,31180,0.063,0.178,0.121
+37035,Catawba County,NC,"Catawba County, NC",2,Strategic Planning,2,,,,,,142515,154810,0.006385787,102254,80837,-0.017916414,34716,0.065,0.135,0.205
+39025,Clermont County,OH,"Clermont County, OH",2,Infrastructure Investment,5,6,,,,,178629,200218,0.008815223,49314,54578,0.007832271,38416,0.048,0.097,0.254
+41009,Columbia County,OR,"Columbia County, OR",1,Strategic Planning,2,,,,,,43657,49344,0.009463929,10210,9896,-0.002399961,35427,0.074,0.13,0.174
+55025,Dane County,WI,"Dane County, WI",3,Workforce Development,1,2,3,,,,428626,509939,0.013451699,275803,310280,0.009101808,49479,0.038,0.134,0.458
+8041,El Paso County,CO,"El Paso County, CO",3,Regional Marketing and Branding,6,,,,,,519463,655044,0.017999052,240733,245137,0.001395496,40893,0.07,0.113,0.353
+51059,Fairfax County,VA,"Fairfax County, VA",3,International Economic Development Initiatives,2,4,,,,,974761,1130924,0.011496192,545298,586104,0.005566576,71607,0.036,0.052,0.582
+39049,Franklin County,OH,"Franklin County, OH",3,Entrepreneurship and Small Business Support,1,2,3,4,,,1072307,1212263,0.009481316,702867,692583,-0.001133173,42624,0.043,0.165,0.36
+30031,Gallatin County,MT,"Gallatin County, MT",2,Workforce Development,1,2,,,,,68369,94720,0.025394441,35983,49616,0.025020721,40000,0.034,0.146,0.454
+37083,Halifax County,NC,"Halifax County, NC",2,Entrepreneurship and Small Business Support,2,3,5,6,,,57238,53453,-0.005248888,19384,15857,-0.015330272,31433,0.09,0.227,0.117
+39061,Hamilton County,OH,"Hamilton County, OH",3,Entrepreneurship and Small Business Support,3,,,,,,844316,804520,-0.003707035,568424,497642,-0.010177598,49413,0.048,0.156,0.332
+47065,Hamilton County,TN,"Hamilton County, TN",2,Entrepreneurship and Small Business Support,3,,,,,,308103,348673,0.009560829,190894,187894,-0.001217745,41200,0.056,0.151,0.278
+48201,Harris County,TX,"Harris County, TX",3,Infrastructure Investment,5,,,,,,3413678,4336853,0.018582755,1861030,2192332,0.012682497,52805,0.047,0.148,0.281
+20079,Harvey County,KS,"Harvey County, KS",1,Entrepreneurship and Small Business Support,3,5,,,,,32877,34741,0.004251104,13387,13773,0.002189013,40762,0.041,0.111,0.257
+51087,Henrico County,VA,"Henrico County, VA",2,Infrastructure Investment,2,5,,,,,263305,318611,0.014774063,166124,179540,0.005991998,46292,0.048,0.095,0.395
+12057,Hillsborough County,FL,"Hillsborough County, FL",3,International Economic Development Initiatives,1,3,4,6,,,1003269,1291578,0.019620858,588534,602960,0.001864518,40000,0.056,0.151,0.29
+6023,Humboldt County,CA,"Humboldt County, CA",2,Strategic Planning,2,,,,,,126403,134493,0.004783477,50014,46007,-0.006403212,35681,0.074,0.21,0.264
+37105,Lee County,NC,"Lee County, NC",2,Workforce Development,1,3,6,,,,49434,60266,0.015357475,27906,24316,-0.010536951,33332,0.08,0.151,0.2
+53041,Lewis County,WA,"Lewis County, WA",2,Entrepreneurship and Small Business Support,3,,,,,,68618,75081,0.006948076,25198,23875,-0.004140078,32056,0.091,0.139,0.149
+26099,Macomb County,MI,"Macomb County, MI",3,Regional Marketing and Branding,6,,,,,,790821,854769,0.005999433,336744,303342,-0.008003349,37664,0.076,0.109,0.222
+1089,Madison County,AL,"Madison County, AL",2,International Economic Development Initiatives,4,,,,,,277868,346892,0.017213185,154837,181264,0.012195425,43102,0.055,0.116,0.378
+26139,Ottawa County,MI,"Ottawa County, MI",2,Workforce Development,3,,,,,,239490,272701,0.010039623,121018,113459,-0.004949079,36663,0.05,0.11,0.293
+28081,PUL Alliance,MS,"PUL Alliance, MS",2,Regional Marketing and Branding,6,,,,,,75960,85340,0.008996876,53042,50399,-0.003924028,36666,0.068,0.156,0.214
+27129,Renville County,MN,"Renville County, MN",1,Entrepreneurship and Small Business Support,3,,,,,,17136,15166,-0.009350276,6215,5720,-0.006364042,52268,0.057,0.093,0.152
+6065,Riverside County,CA,"Riverside County, CA",3,International Economic Development Initiatives,3,4,6,,,,1559109,2292507,0.030100394,471885,594490,0.017925583,31742,0.083,0.14,0.205
+42027,SEDA-COG,PA,"SEDA-COG, PA",2,Infrastructure Investment,2,5,6,,,,135930,155403,0.010351805,63019,67343,0.005117874,40894,0.035,0.242,0.399
+29213,Taney County,MO,"Taney County, MO",2,Strategic Planning,2,6,,,,,39937,53575,0.022855688,25910,29894,0.011062962,27861,0.077,0.155,0.19
+48439,Tarrant County,TX,"Tarrant County, TX",3,Strategic Planning,5,,,,,,1454402,1911541,0.021246789,708219,812634,0.010635191,43044,0.047,0.126,0.291
+99999,United States,US,United States,,,,,,,,,"281,424,600","316,128,839",0.90%,"131,137,819","134,957,493",0.20%,"43,735",0.1,0.1,1
+54097,Upshur County,WV,"Upshur County, WV",1,Infrastructure Investment,3,5,6,,,,23411,24665,0.004021854,7887,7934,0.000457142,31200,0.056,0.163,0.154
+49049,Utah County,UT,"Utah County, UT",3,Workforce Development,1,2,,,,,371648,551891,0.030882927,145309,190069,0.020870549,27624,0.03,0.156,0.357

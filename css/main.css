@@ -97,6 +97,20 @@ body{
 	background-color:#fff;
 	font-family: 'Roboto Condensed', sans-serif;
 }
+.btn{
+	white-space:normal;
+	font-size:1em;
+}
+#nacoLogo{
+		height:55px;
+}
+#headInstructions{
+	margin-top:2em;  
+	padding-bottom:1em;
+	margin-bottom:1em;
+	text-align:center;
+	box-shadow: 0em 1em .7em 0em rgba(0, 0, 0, 0.1);
+}
 circle{
 	fill:none;
 	stroke-width: .5px;
@@ -138,6 +152,10 @@ circle{
 	stroke:none;
 	stroke-linejoin: round;
 	stroke-linecap: round;
+}
+#centerContainer{
+	padding:0 20px;
+	font-size:1em;
 }
 /*
  * Statistic CSS
@@ -355,6 +373,29 @@ circle{
 	}
 	#usStats>.col-md-3, #usStats>.col-md-6, #countyStats>.col-md-3, #countyStats>.col-md-6{
 		clear:left;
+	}
+}
+@media (min-width:1500px){
+	#header h1{
+		font-size:3.5em;
+	}
+	#headInstructions{
+		font-size:1.2em;
+	}
+	#statsContainer{
+		font-size:1.5em;
+	}
+	#statsContainer h4{
+		font-size:1.5em;
+	}
+	#centerContainer h4, #centerContainer{
+		font-size:1.5em;
+	}
+	#nacoLogo{
+		height:80px;
+	}
+	#underMap{
+		font-size:1.5em;
 	}
 }
 

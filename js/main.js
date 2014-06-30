@@ -171,7 +171,7 @@ function draw(topo, stateMesh) {
    		.append("circle")
    		.filter(function(d){return typeById[d.id];})
    		.each(function(it){
-   			it.properties.r = 10;
+   			it.properties.r = 5 + (width*.01);
    			it.properties.c = path.centroid(it);
    			it.properties.x = width/2;
    			it.properties.y = height/2;	
@@ -237,12 +237,12 @@ function draw(topo, stateMesh) {
 	}
 }
 //want to make filter objects, one set for colors, another for sizes
-function addRemoveCircles(selected, add, selection, otherSelection){
+function addRemoveCircles(selected, add, selection, otherSelection, which){
 	if(add){
 		selection.push(selected);
 	}
 	else{
-		if(selection.length===6){}
+		if(which==='color' && selection.length===6 || which==='pop' & selection.length===3){console.log('keeping all ' + which);}
 		else{
 			selection.splice(selection.indexOf(selected), 1);
 		}
@@ -251,6 +251,9 @@ function addRemoveCircles(selected, add, selection, otherSelection){
 	//console.log(selection + " : " + otherSelection);
 	circles.style('display', 'none');
 	
+	
+	
+	/////
 	for(i=0; i<selection.length; i++){
 		for(j=0; j<otherSelection.length; j++){
 			var otherSelectedFilter = otherSelection[j];
@@ -307,7 +310,7 @@ function colorFilterBehavior(){
 					break;
 			}
 		}
-		addRemoveCircles(chosen.attr('id'), add, colorSelection, popSelection);
+		addRemoveCircles(chosen.attr('id'), add, colorSelection, popSelection, 'color');
 	});
 }
 function sizeFilterBehavior(){
@@ -324,8 +327,6 @@ function sizeFilterBehavior(){
 		}
 		else{
 			switch(popSelection.length){
-				case 5:
-				case 4:
 				case 3:
 					add = true;
 					popButtons.classed("active", false);
@@ -333,7 +334,7 @@ function sizeFilterBehavior(){
 					popSelection = [];
 					break;
 				case 1:
-					add = true;
+					add = false;
 					popButtons.classed("active", true);
 					popSelection = selectAll;
 					break;
@@ -343,7 +344,7 @@ function sizeFilterBehavior(){
 					break;
 			}
 		}
-		addRemoveCircles(chosen.attr('id'), add, popSelection, colorSelection);
+		addRemoveCircles(chosen.attr('id'), add, popSelection, colorSelection, 'pop');
 	});
 }
 var countyName = d3.select("#countyName"),
