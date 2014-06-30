@@ -251,33 +251,43 @@ function addRemoveCircles(selected, add, selection, otherSelection, which){
 	//console.log(selection + " : " + otherSelection);
 	circles.style('display', 'none');
 	
-	
-	
-	/////
-	for(i=0; i<selection.length; i++){
-		for(j=0; j<otherSelection.length; j++){
-			var otherSelectedFilter = otherSelection[j];
-			var selectedFilter = selection[i];
-			circles.style("display", function(d){
-				if(typeClasses(typeById[d.id])===selectedFilter || typeClasses(type2ById[d.id])===selectedFilter || sizeClasses(sizeById[d.id])===selectedFilter){
-					//console.log("either " + typeClasses(typeById[d.id]) + " matched " + selectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + selectedFilter);
-					if(sizeClasses(sizeById[d.id])===otherSelectedFilter || typeClasses(typeById[d.id])===otherSelectedFilter || typeClasses(type2ById[d.id])===selectedFilter){
-						//console.log("either " + typeClasses(typeById[d.id]) + " matched " + otherSelectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + otherSelectedFilter);
-						//console.log("matched " + selectedFilter + " : " + otherSelectedFilter);
-						return 'inline';
+	circles.style("display", function(d){
+		var colorMatch = false, popMatch = false, i = 0, j = 0, counter = 0;
+		while(i<selection.length){
+			if(typeClasses(typeById[d.id])===selection[i] || typeClasses(type2ById[d.id])===selection[i]){
+				colorMatch = true;
+				while(j<otherSelection.length){
+					if(sizeClasses(sizeById[d.id])===otherSelection[j]){
+						popMatch = true;
+						break;
 					}
-					else{
-						var currentCircle = d3.select(this);
-						return currentCircle.style();
+					j++;
+				}
+				break;
+			}
+			else if(sizeClasses(sizeById[d.id])===selection[i]){
+				popMatch = true;
+				while(j<otherSelection.length){
+					if(typeClasses(typeById[d.id])===otherSelection[j] || typeClasses(type2ById[d.id])===otherSelection[j]){
+						colorMatch = true;
+						break;
 					}
+					j++;
 				}
-				else{
-					var currentCircle = d3.select(this);
-					return currentCircle.style();
-				}
-			});
+				break;
+			}
+			i++;
 		}
-	}
+		if(popMatch && colorMatch){
+			return 'inline';
+			counter++;
+		}
+		else{
+			var currentCircle = d3.select(this);
+			return currentCircle.style();
+		}
+		console.log(counter);
+	});	
 }
 function colorFilterBehavior(){
 	var typeButtons = d3.select("#typeFilters").selectAll(".btn");
