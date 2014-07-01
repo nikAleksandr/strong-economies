@@ -13,8 +13,6 @@ var typeById = {},
 	type2ById = {},
 	type3ById = {},
 	type4ById = {},
-	type5ById = {},
-	type6ById = {},
 	nameById = {},
 	sizeById = {},
 	pop2000ById = {},
@@ -26,7 +24,8 @@ var typeById = {},
 	incPerCapitaById = {},
 	unemById = {},
 	povById = {},
-	eduById = {};
+	eduById = {},
+	linkById = {};
 
 var topo,projection,path,svg,g;
 var circles, clickedCircle;
@@ -120,8 +119,6 @@ d3.csv("data/EDMapData.csv", function (error, countyData) {
 	  	type2ById[d.id] = +d.TypeNum2;
 	  	type3ById[d.id] = +d.TypeNum3; 
 	  	type4ById[d.id] = +d.TypeNum4; 
-	  	type5ById[d.id] = +d.TypeNum5; 
-	  	type6ById[d.id] = +d.TypeNum6; 
 	  	nameById[d.id] = d.CountyState;
 	  	sizeById[d.id] = +d.CountySize;
 	  	pop2000ById[d.id] = +d.pop2000;
@@ -134,6 +131,7 @@ d3.csv("data/EDMapData.csv", function (error, countyData) {
 		unemById[d.id] = +d.unem;
 		povById[d.id] = +d.pov;
 		eduById[d.id] = +d.edu;
+		linkById[d.id] = d.link;
 	});
 	
 });
@@ -254,7 +252,7 @@ function addRemoveCircles(selected, add, selection, otherSelection, which){
 	circles.style("display", function(d){
 		var colorMatch = false, popMatch = false, i = 0, j = 0, counter = 0;
 		while(i<selection.length){
-			if(typeClasses(typeById[d.id])===selection[i] || typeClasses(type2ById[d.id])===selection[i]){
+			if(typeClasses(typeById[d.id])===selection[i] || typeClasses(type2ById[d.id])===selection[i] || typeClasses(type3ById[d.id])===selection[i] || typeClasses(type4ById[d.id])===selection[i]){
 				colorMatch = true;
 				while(j<otherSelection.length){
 					if(sizeClasses(sizeById[d.id])===otherSelection[j]){
@@ -268,7 +266,7 @@ function addRemoveCircles(selected, add, selection, otherSelection, which){
 			else if(sizeClasses(sizeById[d.id])===selection[i]){
 				popMatch = true;
 				while(j<otherSelection.length){
-					if(typeClasses(typeById[d.id])===otherSelection[j] || typeClasses(type2ById[d.id])===otherSelection[j]){
+					if(typeClasses(typeById[d.id])===otherSelection[j] || typeClasses(type2ById[d.id])===otherSelection[j] || typeClasses(type3ById[d.id])===otherSelection[j] || typeClasses(type4ById[d.id])===otherSelection[j]){
 						colorMatch = true;
 						break;
 					}
@@ -414,6 +412,10 @@ function highlight(d) {
 		frmrFill = frmrActive.style("fill");
 		frmrActive.style("fill", null);
 	}*/
+}
+function doubleClicked(link){
+	
+	open('profiles/' + link, '_blank');
 }
 function redraw() {
   width = document.getElementById('mapContainer').offsetWidth;
