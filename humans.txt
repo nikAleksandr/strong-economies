@@ -4,6 +4,11 @@
 # TEAM
 
     <name> -- <role> -- <twitter>
+    Emilia Istrate -- Supervisor -- @EIstrate
+    Anya Nowakowski -- Project Lead/Data Collection --
+    Kavita Mak -- Project Lead/Data Collection --
+    Nick Lyell -- Lead Developer/Designer -- @NickLyellLyell
+   
 
 # THANKS
 
@@ -12,4 +17,4 @@
 # TECHNOLOGY COLOPHON
 
     HTML5, CSS3
-    Normalize.css, jQuery, Modernizr
+    Normalize.css, D3, jQuery, Modernizr, Bootstrap
