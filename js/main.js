@@ -35,7 +35,7 @@ var format = {
     }
 };
 
-var defaultColor = 'rgb(255,0,0)';
+var defaultColor = 'rgb(28,53,99)';
 
 var width = document.getElementById('mapContainer').offsetWidth;
 var height = width / 2;
@@ -267,9 +267,12 @@ function draw(topo, stateMesh) {
 		});
 	}
 }
-
+var prevSelected;
 function addRemoveCircles(selected, add, selection, otherSelection, which){
 	var counter = 0;
+	if(which==='color'){
+		prevSelected = selected;
+	}
 	if(add){
 		selection.push(selected);
 	}
@@ -311,8 +314,12 @@ function addRemoveCircles(selected, add, selection, otherSelection, which){
 		}
 		if(popMatch && colorMatch){
 			counter++;
-			
-			return color(selected);
+			if(which==='color'){
+				return color(selected);
+			}
+			else{
+				return color(prevSelected);
+			}
 		}
 		else{
 			return 'none';
@@ -366,7 +373,9 @@ function sizeFilterBehavior(){
 		
 		if(!chosen.classed("active")){
 			add = true;
+			popButtons.classed("active", false);
 			chosen.classed("active", true);
+			popSelection = [];
 		}
 		else{
 			switch(popSelection.length){
@@ -376,14 +385,10 @@ function sizeFilterBehavior(){
 					chosen.classed("active", true);
 					popSelection = [];
 					break;
-				case 1:
+				default:
 					add = false;
 					popButtons.classed("active", true);
 					popSelection = selectAll;
-					break;
-				default:
-					chosen.classed("active", false);
-					add = false;
 					break;
 			}
 		}
