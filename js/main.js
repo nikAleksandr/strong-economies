@@ -1,4 +1,12 @@
 d3.select(window).on("resize", throttle);
+//popover js
+function setDefinitionBehavior(){
+	$('.popover-dismiss').hover(function(){
+		var selfId= "#"+this.id;
+		$(selfId).popover('toggle');
+	});
+}
+
 // formatting for the tooltip
 var format = {
 	"percent": function(num, type){
@@ -108,7 +116,7 @@ function setup(width,height){
   
   colorFilterBehavior();
   sizeFilterBehavior();
-
+  setDefinitionBehavior();
 }
 
 d3.csv("data/EDMapData.csv", function (error, countyData) {
@@ -176,7 +184,7 @@ function draw(topo, stateMesh) {
    		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] ;})
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
-   		.style("fill", function(it) {if(!isNaN(typeById[it.id])){return color(typeById[it.id]);}else{return 'none';}})
+   		.style("fill", function(it) {if(!isNaN(typeById[it.id])){return 'rgb(230,50,50)';}else{return 'none';}})
    		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + typeClasses(typeById[it.id]) + " "+ typeClasses(type2ById[it.id]) + " active";}else{return "circle";}});
    
    circles = d3.selectAll('circle').filter(function(d){return typeById[d.id];});
@@ -353,7 +361,18 @@ function sizeFilterBehavior(){
 		addRemoveCircles(chosen.attr('id'), add, popSelection, colorSelection, 'pop');
 	});
 }
-
+function resetFilters(){
+	var typeButtons = d3.select("#typeFilters").selectAll(".btn");
+	var popButtons = d3.select("#popFilters").selectAll(".btn");
+	popSelection = ['large', 'medium', 'small'];
+	colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
+	
+	popButtons.classed("active", true);
+	typeButtons.classed("active", true);
+	
+	
+	addRemoveCircles(null, false, colorSelection, popSelection, 'color');
+}
 function populateStats(d){
 	
 	countyName.html(nameById[d.id]);
