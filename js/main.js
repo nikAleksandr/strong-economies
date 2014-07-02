@@ -1,10 +1,7 @@
 d3.select(window).on("resize", throttle);
 //popover js
 function setDefinitionBehavior(){
-	$('.popover-dismiss').hover(function(){
-		var selfId= "#"+this.id;
-		$(selfId).popover('toggle');
-	});
+	$('.popover-dismiss').popover({trigger: 'click, hover'});
 }
 
 // formatting for the tooltip
@@ -37,6 +34,8 @@ var format = {
     	}
     }
 };
+
+var defaultColor = 'rgb(255,0,0)';
 
 var width = document.getElementById('mapContainer').offsetWidth;
 var height = width / 2;
@@ -78,10 +77,38 @@ var countyTitle = $('#countyStats-title').hide();
 var	typeClasses = d3.scale.threshold()
 	.domain([1,2,3,4,5,6,7])
 	.range(['noData', 'workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region']);
-	
+
+/*	
 var	color = d3.scale.threshold()
 	.domain([1,2,3,4,5,6,7])
 	.range(['none', 'rgb(253,156,2)', 'rgb(0,153,209)', 'rgb(70,200,245)', 'rgb(254,207,47)', 'rgb(102,204,204)', 'rgb(69,178,157)']);
+*/
+var color = function(type){
+	switch(type){
+		case 'workforce':
+			return 'rgb(253,156,2)';
+			break;
+		case 'stratPlan':
+			return 'rgb(0,153,209)';
+			break;
+		case 'entrep':
+			return 'rgb(70,200,245)';
+			break;
+		case 'inter':
+			return 'rgb(254,207,47)';
+			break;
+		case 'infra':
+			return 'rgb(102,204,204)';
+			break;
+		case 'region':
+			return 'rgb(69,178,157)';
+			break;
+		default:
+			return 'none';
+			break;
+		
+	}
+};
 
 function sizeClasses(d){
 	switch(d){
@@ -184,7 +211,7 @@ function draw(topo, stateMesh) {
    		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] ;})
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
-   		.style("fill", function(it) {if(!isNaN(typeById[it.id])){return 'rgb(230,50,50)';}else{return 'none';}})
+   		.style("fill", function(it) {if(!isNaN(typeById[it.id])){return defaultColor;}else{return 'none';}})
    		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + typeClasses(typeById[it.id]) + " "+ typeClasses(type2ById[it.id]) + " active";}else{return "circle";}});
    
    circles = d3.selectAll('circle').filter(function(d){return typeById[d.id];});
@@ -242,6 +269,7 @@ function draw(topo, stateMesh) {
 }
 
 function addRemoveCircles(selected, add, selection, otherSelection, which){
+	var counter = 0;
 	if(add){
 		selection.push(selected);
 	}
@@ -252,10 +280,10 @@ function addRemoveCircles(selected, add, selection, otherSelection, which){
 		}
 	}
 	
-	circles.style('display', 'none');
+	circles.style('fill', 'none');
 	
-	circles.style("display", function(d){
-		var colorMatch = false, popMatch = false, i = 0, j = 0, counter = 0;
+	circles.style("fill", function(d){ 
+		var colorMatch = false, popMatch = false, i = 0, j = 0;
 		while(i<selection.length){
 			if(typeClasses(typeById[d.id])===selection[i] || typeClasses(type2ById[d.id])===selection[i] || typeClasses(type3ById[d.id])===selection[i] || typeClasses(type4ById[d.id])===selection[i]){
 				colorMatch = true;
@@ -282,15 +310,18 @@ function addRemoveCircles(selected, add, selection, otherSelection, which){
 			i++;
 		}
 		if(popMatch && colorMatch){
-			return 'inline';
 			counter++;
+			
+			return color(selected);
 		}
 		else{
-			var currentCircle = d3.select(this);
-			return currentCircle.style();
+			return 'none';
 		}
-		console.log(counter);
 	});	
+	console.log(counter);
+	if(counter===35){
+		circles.style('fill', defaultColor);
+	}
 }
 
 function colorFilterBehavior(){
@@ -303,7 +334,9 @@ function colorFilterBehavior(){
 		
 		if(!chosen.classed("active")){
 			add = true;
+			typeButtons.classed("active", false);
 			chosen.classed("active", true);
+			colorSelection = [];
 		}
 		else{
 			switch(colorSelection.length){
@@ -313,14 +346,10 @@ function colorFilterBehavior(){
 					chosen.classed("active", true);
 					colorSelection = [];
 					break;
-				case 1:
+				default:
 					add = false;
 					typeButtons.classed("active", true);
 					colorSelection = selectAll;
-					break;
-				default:
-					chosen.classed("active", false);
-					add = false;
 					break;
 			}
 		}
