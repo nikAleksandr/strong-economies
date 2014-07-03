@@ -46,6 +46,7 @@ var typeById = {},
 	type4ById = {},
 	nameById = {},
 	sizeById = {},
+	regionById = {},
 	pop2000ById = {},
 	pop2013ById = {},
 	popGrowthById = {},
@@ -70,6 +71,7 @@ var topo,projection,path,svg,g;
 var circles, clickedCircle;
 var colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
 var popSelection = ['large', 'medium', 'small'];
+var regionSelection = ['northeast', 'south', 'midwest', 'west'];
   
 var countyStats = $("#countyStats").hide();
 var countyTitle = $('#countyStats-title').hide();
@@ -77,6 +79,10 @@ var countyTitle = $('#countyStats-title').hide();
 var	typeClasses = d3.scale.threshold()
 	.domain([1,2,3,4,5,6,7])
 	.range(['noData', 'workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region']);
+
+var regionClasses = d3.scale.threshold()
+	.domain([1,2,3,4,5])
+	.range(['noData', 'northeast', 'south', 'midwest', 'west']);
 
 /*	
 var	color = d3.scale.threshold()
@@ -143,6 +149,7 @@ function setup(width,height){
   
   colorFilterBehavior();
   sizeFilterBehavior();
+  regionFilterBehavior();
   setDefinitionBehavior();
 }
 
@@ -156,6 +163,7 @@ d3.csv("data/EDMapData.csv", function (error, countyData) {
 	  	type4ById[d.id] = +d.TypeNum4; 
 	  	nameById[d.id] = d.CountyState;
 	  	sizeById[d.id] = +d.CountySize;
+	  	regionById[d.id] = +d.region;
 	  	pop2000ById[d.id] = +d.pop2000;
 		pop2013ById[d.id] = +d.pop2013;
 		popGrowthById[d.id] = +d.popGrowth;
@@ -189,7 +197,7 @@ function draw(topo, stateMesh) {
       .attr("class", "county")
       .attr("d", path)
       .attr("id", function(d,i) { return d.id; })
-      .attr("class", function(d){if(!isNaN(typeById[d.id])){return "county " + "hasData "+ typeClasses(typeById[d.id]);}else{return "county";}});
+      .attr("class", "county");
 
   g.append("path").datum(stateMesh)
 		.attr("id", "state-borders")
@@ -268,16 +276,27 @@ function draw(topo, stateMesh) {
 	}
 }
 var prevSelected;
-function addRemoveCircles(selected, add, selection, otherSelection, which){
-	var counter = 0;
-	if(which==='color'){
-		prevSelected = selected;
+function addRemoveCircles(selected, add, cSelection, pSelection, rSelection, which){
+	var counter = 0, selection;
+	
+	switch(which){
+		case 'color':
+			prevSelected = selected;
+			selection = cSelection;
+			break;
+		case 'pop':
+			selection = pSelection;
+			break;
+		case 'region':
+			selection = rSelection;
+			break;
 	}
+	
 	if(add){
 		selection.push(selected);
 	}
 	else{
-		if(which==='color' && selection.length===6 || which==='pop' & selection.length===3){}
+		if(which==='color' && selection.length===6 || which==='pop' & selection.length===3 || which==='region' & selection.length===4){}
 		else{
 			selection.splice(selection.indexOf(selected), 1);
 		}
@@ -286,36 +305,33 @@ function addRemoveCircles(selected, add, selection, otherSelection, which){
 	circles.style('fill', 'none');
 	
 	circles.style("fill", function(d){ 
-		var colorMatch = false, popMatch = false, i = 0, j = 0;
-		while(i<selection.length){
-			if(typeClasses(typeById[d.id])===selection[i] || typeClasses(type2ById[d.id])===selection[i] || typeClasses(type3ById[d.id])===selection[i] || typeClasses(type4ById[d.id])===selection[i]){
-				colorMatch = true;
-				while(j<otherSelection.length){
-					if(sizeClasses(sizeById[d.id])===otherSelection[j]){
-						popMatch = true;
-						break;
-					}
-					j++;
-				}
+		var colorMatch = false, popMatch = false, regionMatch=false, c = 0, p = 0, r=0;
+		while(r<rSelection.length){
+			if(regionClasses(regionById[d.id])===rSelection[r]){
+				regionMatch = true;
 				break;
 			}
-			else if(sizeClasses(sizeById[d.id])===selection[i]){
-				popMatch = true;
-				while(j<otherSelection.length){
-					if(typeClasses(typeById[d.id])===otherSelection[j] || typeClasses(type2ById[d.id])===otherSelection[j] || typeClasses(type3ById[d.id])===otherSelection[j] || typeClasses(type4ById[d.id])===otherSelection[j]){
-						colorMatch = true;
-						break;
-					}
-					j++;
-				}
-				break;
-			}
-			i++;
+			r++;
 		}
-		if(popMatch && colorMatch){
+		while(p<pSelection.length){
+			if(sizeClasses(sizeById[d.id])===pSelection[p]){
+				popMatch = true;
+				break;
+			}
+			p++;
+		}
+		while(c<cSelection.length){
+			if(typeClasses(typeById[d.id])===cSelection[c] || typeClasses(type2ById[d.id])===cSelection[c] || typeClasses(type3ById[d.id])===cSelection[c] || typeClasses(type4ById[d.id])===cSelection[c]){
+				colorMatch = true;
+				break;
+			}
+			c++;
+		}
+		if(popMatch && colorMatch && regionMatch){
 			counter++;
 			if(which==='color'){
-				return color(selected);
+				if(colorSelection.length===6) return defaultColor;
+				else return color(selected);
 			}
 			else {
 				if(colorSelection.length===6) return defaultColor;
@@ -330,6 +346,7 @@ function addRemoveCircles(selected, add, selection, otherSelection, which){
 	if(counter===35){
 		circles.style('fill', defaultColor);
 	}
+	
 }
 
 function colorFilterBehavior(){
@@ -361,7 +378,7 @@ function colorFilterBehavior(){
 					break;
 			}
 		}
-		addRemoveCircles(chosen.attr('id'), add, colorSelection, popSelection, 'color');
+		addRemoveCircles(chosen.attr('id'), add, colorSelection, popSelection, regionSelection, 'color');
 	});
 }
 function sizeFilterBehavior(){
@@ -393,7 +410,39 @@ function sizeFilterBehavior(){
 					break;
 			}
 		}
-		addRemoveCircles(chosen.attr('id'), add, popSelection, colorSelection, 'pop');
+		addRemoveCircles(chosen.attr('id'), add, colorSelection, popSelection, regionSelection, 'pop');
+	});
+}
+function regionFilterBehavior(){
+	var regionButtons = d3.select("#regionFilters").selectAll(".btn");
+	var selectAll = ['northeast', 'south', 'midwest', 'west'];
+	var add;
+	
+	regionButtons.on("click", function(){
+		var chosen = d3.select(this);
+		
+		if(!chosen.classed("active")){
+			add = true;
+			regionButtons.classed("active", false);
+			chosen.classed("active", true);
+			regionSelection = [];
+		}
+		else{
+			switch(regionSelection.length){
+				case 4:
+					add = true;
+					regionButtons.classed("active", false);
+					chosen.classed("active", true);
+					regionSelection = [];
+					break;
+				default:
+					add = false;
+					regionButtons.classed("active", true);
+					regionSelection = selectAll;
+					break;
+			}
+		}
+		addRemoveCircles(chosen.attr('id'), add, colorSelection, popSelection, regionSelection, 'region');
 	});
 }
 function resetFilters(){
