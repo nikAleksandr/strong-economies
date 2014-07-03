@@ -317,8 +317,9 @@ function addRemoveCircles(selected, add, selection, otherSelection, which){
 			if(which==='color'){
 				return color(selected);
 			}
-			else{
-				return color(prevSelected);
+			else {
+				if(colorSelection.length===6) return defaultColor;
+				else return color(prevSelected);
 			}
 		}
 		else{
