@@ -1,38 +1,120 @@
-/*
- * to add
- * -	Highlight()
--	doubleClicked(linkById[d.id])
--	displayTooltip() – executeSearchMatch()
--	linkById[d.id]
-
- * 
- */
-
 d3.select(window).on("resize", throttle);
+//popover js
+function setDefinitionBehavior(){
+	$('.popover-dismiss').popover({trigger: 'click, hover'});
+}
 
-/*
-var zoom = d3.behavior.zoom()
-    .scaleExtent([1, 8])
-    .on("zoom", move);
-   */
+// formatting for the tooltip
+var format = {
+	"percent": function(num, type){
+		if(type === 'growth') return d3.format('+.1%')(num);
+		else return d3.format('.1%')(num);
+	},
+	"binary": function (num) { return num; },
+	"categorical": function (num) { return num; },
+	"level": function (num, type) {
+		if (type === 'year') return num;
+    	else if (num >= 1000000000) {
+    		var formatted = String((num/1000000000).toFixed(1)) + " Bil";
+    		return (type === 'currency') ? '$' + formatted : formatted;
+    	} else if (num >= 1000000) {
+    		var formatted = String((num/1000000).toFixed(1)) + " Mil";
+    		return (type === 'currency') ? '$' + formatted : formatted;
+    	} else if (num >= 10000) {
+    		var formatted = String((num/1000).toFixed(1)) + "k";
+    		return (type === 'currency') ? '$' + formatted : formatted;
+    	} else if (num >= 100) {
+    		return (type === 'currency') ? d3.format('$,.0f')(num) : d3.format(',.0f')(num);
+    	} else if (num == 0) {
+    		return (type === 'currency') ? '$0' : 0;
+    	} else {
+    		if (type === 'currency') return d3.format('$.1f')(num);
+    		else if (type === 'persons') return d3.format('0f')(num);
+    		else return d3.format('.1f')(num);
+    	}
+    }
+};
 
-var width = document.getElementById('mapContainer').offsetWidth-60;
+var defaultColor = 'rgb(28,53,99)';
+
+var width = document.getElementById('mapContainer').offsetWidth;
 var height = width / 2;
 
 var typeById = {},
+	type2ById = {},
+	type3ById = {},
+	type4ById = {},
 	nameById = {},
-	sizeById = {};
-
+	sizeById = {},
+	regionById = {},
+	pop2000ById = {},
+	pop2013ById = {},
+	popGrowthById = {},
+	jobs2000ById = {},
+	jobs2013ById = {},
+	jobsGrowthById = {},
+	incPerCapitaById = {},
+	unemById = {},
+	povById = {},
+	eduById = {},
+	linkById = {};
+	
+var countyName = d3.select("#countyName"),
+	countyPop2013 = d3.select('#countyPop2013'),
+	countyJobs2013 = d3.select('#countyJobs2013'),
+	countyIncPerCap = d3.select('#countyIncPerCap'),
+	countyUnem = d3.select('#countyUnem'),
+	countyPov = d3.select('#countyPov'),
+	countyEdu = d3.select('#countyEdu');
+	
 var topo,projection,path,svg,g;
 var circles, clickedCircle;
 var colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
 var popSelection = ['large', 'medium', 'small'];
+var regionSelection = ['northeast', 'south', 'midwest', 'west'];
   
-var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
+var countyStats = $("#countyStats").hide();
+var countyTitle = $('#countyStats-title').hide();
 
-var	colorClasses = d3.scale.threshold()
+var	typeClasses = d3.scale.threshold()
 	.domain([1,2,3,4,5,6,7])
 	.range(['noData', 'workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region']);
+
+var regionClasses = d3.scale.threshold()
+	.domain([1,2,3,4,5])
+	.range(['noData', 'northeast', 'south', 'midwest', 'west']);
+
+/*	
+var	color = d3.scale.threshold()
+	.domain([1,2,3,4,5,6,7])
+	.range(['none', 'rgb(253,156,2)', 'rgb(0,153,209)', 'rgb(70,200,245)', 'rgb(254,207,47)', 'rgb(102,204,204)', 'rgb(69,178,157)']);
+*/
+var color = function(type){
+	switch(type){
+		case 'workforce':
+			return 'rgb(253,156,2)';
+			break;
+		case 'stratPlan':
+			return 'rgb(0,153,209)';
+			break;
+		case 'entrep':
+			return 'rgb(70,200,245)';
+			break;
+		case 'inter':
+			return 'rgb(254,207,47)';
+			break;
+		case 'infra':
+			return 'rgb(102,204,204)';
+			break;
+		case 'region':
+			return 'rgb(69,178,157)';
+			break;
+		default:
+			return 'none';
+			break;
+		
+	}
+};
 
 function sizeClasses(d){
 	switch(d){
@@ -62,27 +144,41 @@ function setup(width,height){
       .attr("height", height)
       .append("g")
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-      //.call(zoom);
 
   g = svg.append("g");
   
   colorFilterBehavior();
   sizeFilterBehavior();
-
+  regionFilterBehavior();
+  setDefinitionBehavior();
 }
 
 d3.csv("data/EDMapData.csv", function (error, countyData) {
 	data = countyData;
 	
 	countyData.forEach(function(d) { 
-	  	typeById[d.id] = +d.TypeNum; 
-	  	nameById[d.id] = d.countyState;
+	  	typeById[d.id] = +d.TypeNum;
+	  	type2ById[d.id] = +d.TypeNum2;
+	  	type3ById[d.id] = +d.TypeNum3; 
+	  	type4ById[d.id] = +d.TypeNum4; 
+	  	nameById[d.id] = d.CountyState;
 	  	sizeById[d.id] = +d.CountySize;
+	  	regionById[d.id] = +d.region;
+	  	pop2000ById[d.id] = +d.pop2000;
+		pop2013ById[d.id] = +d.pop2013;
+		popGrowthById[d.id] = +d.popGrowth;
+		jobs2000ById[d.id] = +d.jobs2000;
+		jobs2013ById[d.id] = +d.jobs2013;
+		jobsGrowthById[d.id] = +d.jobsGrowth;
+		incPerCapitaById[d.id] = +d.incPerCap;
+		unemById[d.id] = +d.unem;
+		povById[d.id] = +d.pov;
+		eduById[d.id] = +d.edu;
+		linkById[d.id] = d.link;
 	});
 	
 });
 	
-
 d3.json("us.json", function(error, us) {
 
   var counties = topojson.feature(us, us.objects.counties).features;
@@ -101,7 +197,7 @@ function draw(topo, stateMesh) {
       .attr("class", "county")
       .attr("d", path)
       .attr("id", function(d,i) { return d.id; })
-      .attr("class", function(d){if(!isNaN(typeById[d.id])){return "county " + "hasData "+ colorClasses(typeById[d.id]);}else{return "county";}});
+      .attr("class", "county");
 
   g.append("path").datum(stateMesh)
 		.attr("id", "state-borders")
@@ -110,34 +206,21 @@ function draw(topo, stateMesh) {
   //ofsets plus width/height of transform, plsu 20 px of padding, plus 20 extra for tooltip offset off mouse
   var offsetL = document.getElementById('mapContainer').offsetLeft+(width/2)+40;
   var offsetT =document.getElementById('mapContainer').offsetTop+(height/2)+20;
-
-  //tooltips
-  county
-    .on("mousemove", function(d,i) {
-      var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
-        tooltip
-          .classed("hidden", false)
-          .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
-          .html(d.properties.name);
-      })
-      .on("mouseout",  function(d,i) {
-        tooltip.classed("hidden", true);
-      }); 
    
    var makeCircles = d3.select('svg').selectAll("circle").data(topo).enter()
    		.append("circle")
    		.filter(function(d){return typeById[d.id];})
    		.each(function(it){
-   			it.properties.r = sizeById[it.id]*2 + 13;
+   			it.properties.r = 5 + (width*.01);
    			it.properties.c = path.centroid(it);
    			it.properties.x = width/2;
-   			it.properties.y = height/2;	
-   			//it.properties.class = color(typeById[it.id]);
+   			it.properties.y = height/2;
    		})
    		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] ;})
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
-   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + colorClasses(typeById[it.id]) + " active";}else{return "county";}});
+   		.style("fill", function(it) {if(!isNaN(typeById[it.id])){return defaultColor;}else{return 'none';}})
+   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + typeClasses(typeById[it.id]) + " "+ typeClasses(type2ById[it.id]) + " active";}else{return "circle";}});
    
    circles = d3.selectAll('circle').filter(function(d){return typeById[d.id];});
    
@@ -150,7 +233,7 @@ function draw(topo, stateMesh) {
 	var clicked = function(d, event) {
 		highlight(d);
 		if (d3.select('.active').empty() !== true) {
-			//displayTooltip(d);
+			populateStats(d);
 		}		
 	};
 	
@@ -192,43 +275,80 @@ function draw(topo, stateMesh) {
 		});
 	}
 }
-//want to make filter objects, one set for colors, another for sizes
-function addRemoveCircles(selected, add, selection, otherSelection){
+var prevSelected;
+function addRemoveCircles(selected, add, cSelection, pSelection, rSelection, which){
+	var counter = 0, selection;
+	
+	switch(which){
+		case 'color':
+			prevSelected = selected;
+			selection = cSelection;
+			break;
+		case 'pop':
+			selection = pSelection;
+			break;
+		case 'region':
+			selection = rSelection;
+			break;
+	}
+	
 	if(add){
 		selection.push(selected);
 	}
 	else{
-		selection.splice(selection.indexOf(selected), 1);
-	}
-	
-	//console.log(selection + " : " + otherSelection);
-	circles.style('display', 'none');
-	
-	for(i=0; i<selection.length; i++){
-		for(j=0; j<otherSelection.length; j++){
-			var otherSelectedFilter = otherSelection[j];
-			var selectedFilter = selection[i];
-			circles.style("display", function(d){
-				if(colorClasses(typeById[d.id])===selectedFilter || sizeClasses(sizeById[d.id])===selectedFilter){
-					//console.log("either " + colorClasses(typeById[d.id]) + " matched " + selectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + selectedFilter);
-					if(sizeClasses(sizeById[d.id])===otherSelectedFilter || colorClasses(typeById[d.id])===otherSelectedFilter){
-						//console.log("either " + colorClasses(typeById[d.id]) + " matched " + otherSelectedFilter + " or " + sizeClasses(sizeById[d.id]) + " matched " + otherSelectedFilter);
-						//console.log("matched " + selectedFilter + " : " + otherSelectedFilter);
-						return 'inline';
-					}
-					else{
-						var currentCircle = d3.select(this);
-						return currentCircle.style();
-					}
-				}
-				else{
-					var currentCircle = d3.select(this);
-					return currentCircle.style();
-				}
-			});
+		if(which==='color' && selection.length===6 || which==='pop' & selection.length===3 || which==='region' & selection.length===4){}
+		else{
+			selection.splice(selection.indexOf(selected), 1);
 		}
 	}
+	
+	circles.style('fill', 'none');
+	
+	circles.style("fill", function(d){ 
+		var colorMatch = false, popMatch = false, regionMatch=false, c = 0, p = 0, r=0;
+		while(r<rSelection.length){
+			if(regionClasses(regionById[d.id])===rSelection[r]){
+				regionMatch = true;
+				break;
+			}
+			r++;
+		}
+		while(p<pSelection.length){
+			if(sizeClasses(sizeById[d.id])===pSelection[p]){
+				popMatch = true;
+				break;
+			}
+			p++;
+		}
+		while(c<cSelection.length){
+			if(typeClasses(typeById[d.id])===cSelection[c] || typeClasses(type2ById[d.id])===cSelection[c] || typeClasses(type3ById[d.id])===cSelection[c] || typeClasses(type4ById[d.id])===cSelection[c]){
+				colorMatch = true;
+				break;
+			}
+			c++;
+		}
+		if(popMatch && colorMatch && regionMatch){
+			counter++;
+			if(which==='color'){
+				if(colorSelection.length===6) return defaultColor;
+				else return color(selected);
+			}
+			else {
+				if(colorSelection.length===6) return defaultColor;
+				else return color(prevSelected);
+			}
+		}
+		else{
+			return 'none';
+		}
+	});	
+	console.log(counter);
+	if(counter===35){
+		circles.style('fill', defaultColor);
+	}
+	
 }
+
 function colorFilterBehavior(){
 	var typeButtons = d3.select("#typeFilters").selectAll(".btn");
 	var selectAll = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
@@ -239,30 +359,26 @@ function colorFilterBehavior(){
 		
 		if(!chosen.classed("active")){
 			add = true;
+			typeButtons.classed("active", false);
 			chosen.classed("active", true);
+			colorSelection = [];
 		}
 		else{
 			switch(colorSelection.length){
-				case 8:
-				case 7:
 				case 6:
 					add = true;
 					typeButtons.classed("active", false);
 					chosen.classed("active", true);
 					colorSelection = [];
 					break;
-				case 1:
-					add = true;
+				default:
+					add = false;
 					typeButtons.classed("active", true);
 					colorSelection = selectAll;
 					break;
-				default:
-					chosen.classed("active", false);
-					add = false;
-					break;
 			}
 		}
-		addRemoveCircles(chosen.attr('id'), add, colorSelection, popSelection);
+		addRemoveCircles(chosen.attr('id'), add, colorSelection, popSelection, regionSelection, 'color');
 	});
 }
 function sizeFilterBehavior(){
@@ -275,34 +391,88 @@ function sizeFilterBehavior(){
 		
 		if(!chosen.classed("active")){
 			add = true;
+			popButtons.classed("active", false);
 			chosen.classed("active", true);
+			popSelection = [];
 		}
 		else{
 			switch(popSelection.length){
-				case 5:
-				case 4:
 				case 3:
 					add = true;
 					popButtons.classed("active", false);
 					chosen.classed("active", true);
 					popSelection = [];
 					break;
-				case 1:
-					add = true;
+				default:
+					add = false;
 					popButtons.classed("active", true);
 					popSelection = selectAll;
 					break;
+			}
+		}
+		addRemoveCircles(chosen.attr('id'), add, colorSelection, popSelection, regionSelection, 'pop');
+	});
+}
+function regionFilterBehavior(){
+	var regionButtons = d3.select("#regionFilters").selectAll(".btn");
+	var selectAll = ['northeast', 'south', 'midwest', 'west'];
+	var add;
+	
+	regionButtons.on("click", function(){
+		var chosen = d3.select(this);
+		
+		if(!chosen.classed("active")){
+			add = true;
+			regionButtons.classed("active", false);
+			chosen.classed("active", true);
+			regionSelection = [];
+		}
+		else{
+			switch(regionSelection.length){
+				case 4:
+					add = true;
+					regionButtons.classed("active", false);
+					chosen.classed("active", true);
+					regionSelection = [];
+					break;
 				default:
-					chosen.classed("active", false);
 					add = false;
+					regionButtons.classed("active", true);
+					regionSelection = selectAll;
 					break;
 			}
 		}
-		addRemoveCircles(chosen.attr('id'), add, popSelection, colorSelection);
+		addRemoveCircles(chosen.attr('id'), add, colorSelection, popSelection, regionSelection, 'region');
 	});
 }
+function resetFilters(){
+	var typeButtons = d3.select("#typeFilters").selectAll(".btn");
+	var popButtons = d3.select("#popFilters").selectAll(".btn");
+	popSelection = ['large', 'medium', 'small'];
+	colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
+	
+	popButtons.classed("active", true);
+	typeButtons.classed("active", true);
+	
+	
+	addRemoveCircles(null, false, colorSelection, popSelection, 'color');
+}
+function populateStats(d){
+	
+	countyName.html(nameById[d.id]);
+	countyPop2013.html(format['level'](pop2013ById[d.id], 'pop'));
+	countyJobs2013.html(format['level'](jobs2013ById[d.id], 'jobs'));
+	countyIncPerCap.html(format['level'](incPerCapitaById[d.id], 'currency'));
+	countyUnem.html(format['percent'](unemById[d.id]));
+	countyPov.html(format['percent'](povById[d.id]));
+	countyEdu.html(format['percent'](eduById[d.id]));
+	
+}
+
 function highlight(d) {
-	//if (clickedCircle === d) tooltip.classed('hidden', true);
+	countyStats.show();
+	countyTitle.show();
+	
 	circles.classed("active", false);
 	
 	if (d && clickedCircle !== d) {
@@ -313,37 +483,26 @@ function highlight(d) {
 	
 	circles
       .classed("active", clickedCircle && function(d) { return d === clickedCircle; });
-    if(clickedCircle === null)circles.classed("active", true);
-	
-	/*if (frmrActive) frmrActive.style("fill", frmrFill);	
-	frmrActive = d3.select(".active");
-	if (frmrActive.empty() !== true) {
-		frmrFill = frmrActive.style("fill");
-		frmrActive.style("fill", null);
-	}*/
+    if(clickedCircle === null){
+    	circles.classed("active", true); 
+    	countyStats.hide();
+    	countyTitle.hide();
+    }
+    
 }
+
+function doubleClicked(link){
+	open('profiles/' + link, '_blank');
+}
+
 function redraw() {
-  width = document.getElementById('mapContainer').offsetWidth-60;
+  width = document.getElementById('mapContainer').offsetWidth;
   height = width / 2;
   d3.select('svg').remove();
   setup(width,height);
   draw(topo);
 }
 
-/*function move() {
-
-  var t = d3.event.translate;
-  var s = d3.event.scale;  
-  var h = height / 3;
-  
-  t[0] = Math.min(width / 2 * (s - 1), Math.max(width / 2 * (1 - s), t[0]));
-  t[1] = Math.min(height / 2 * (s - 1) + h * s, Math.max(height / 2 * (1 - s) - h * s, t[1]));
-
-  zoom.translate(t);
-  g.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
-
-}
-*/
 var throttleTimer;
 function throttle() {
   window.clearTimeout(throttleTimer);

@@ -95,24 +95,48 @@ textarea {
    ========================================================================== */
 body{
 	background-color:#fff;
+	font-family: 'Roboto Condensed', sans-serif;
+}
+.btn{
+	white-space:normal;
+	font-size:1em;
+}
+#nacoLogo{
+		height:55px;
+}
+#headInstructions{
+	margin-top:2em;  
+	padding-bottom:1em;
+	margin-bottom:1em;
+	text-align:center;
+	box-shadow: 0em 1em .7em 0em rgba(0, 0, 0, 0.1);
 }
 circle{
 	fill:none;
-	stroke-width: 0px;
-	stroke: none;
+	stroke-width: .5px;
+	stroke: #fff;
 	box-shadow: 0px 0px 2px 0px #a6a6a6; 
  	-mox-box-shadow: 0px 0px 2px 0px #a6a6a6; 
 	-webkit-box-shadow: 0px 0px 2px 0px #a6a6a6;  
-	opacity:.5; 
+	opacity:.35; 
 }
 .active{
 	opacity:1;
 }
 .btn{
-	opacity:.5;
+	opacity:.35;
 }
 .btn.active{
 	opacity:1;
+	stroke-width: .8px;
+	stroke: #000;
+}
+#popFilters, #regionFilters{
+	text-align:center;
+}
+#mapContainer{
+	padding:0;
+	margin:0;
 }
 #state-borders{
 	stroke:#fff;
@@ -123,11 +147,57 @@ circle{
 	pointer-events: none;
 }
 .county{
-	fill: rgb(201,201,201);
-	stroke-width:.8px;
-	stroke:#eee;
+	fill: rgb(221,221,221);
+	stroke-width:.1px;
+	stroke:none;
 	stroke-linejoin: round;
 	stroke-linecap: round;
+}
+#centerContainer{
+	padding:0 20px;
+	font-size:1em;
+}
+/*
+ * Statistic CSS
+ */
+.statContainer, .statTitle{
+	text-align: center;
+}
+.statTitle, .middleTitles{
+	font-size:1.1em;
+	text-align:center;
+}
+.middleTitles{
+	display:inline;
+	padding-top:8px;
+	padding-bottom:8px;
+}
+.statTitle{
+	display:none;
+}
+.growth{
+	padding-right:0;
+	padding-left:0;
+}
+.val{
+	font-size:1.5em;
+}
+.up{
+	fill: green;
+	fill-opacity:1;
+	stroke: none;
+	transform:rotate(180deg)
+}
+.down{
+	fill: red;
+	fill-opacity:1;
+	stroke:none;
+}
+.sideways{
+	fill: yellow;
+	fill-opacity:1;
+	stroke:none;
+	transform:rotate(270deg)	
 }
 /*
  * County and Circle Color (with respective button) CSS
@@ -135,47 +205,55 @@ circle{
 .noData{
 	fill: rgb(201,201,201);
 }
+/*
 .workforce{
 	fill: rgb(253,156,2);
 }
-#workforce{
-	background-color: rgb(253,156,2);
-	color: #fff;
-}
+
 .stratPlan{
 	fill: rgb(0,153,209);
 }
-#stratPlan{
-	background-color:rgb(0,153,209);
-	color:#fff;
-}
+
 .entrep{
 	fill: rgb(70,200,245);
 }
-#entrep{
-	background-color: rgb(70,200,245);
-	color:#fff;
-}
+
 .inter{
 	fill: rgb(254,207,47);
 }
-#inter{
-	background-color: rgb(254,207,47);
-	color:#fff;
-}
+
 .infra{
 	fill:rgb(102,204,204);
+}
+
+.region{
+	fill:rgb(69,178,157);
+}
+
+*/
+#region{
+	background-color:rgb(69,178,157);
+	color:#fff;
 }
 #infra{
 	background-color:rgb(102,204,204);
 	color:#fff;
 }
-.region{
-	fill:rgb(69,178,157);
-}
-#region{
-	background-color:rgb(69,178,157);
+#inter{
+	background-color: rgb(254,207,47);
 	color:#fff;
+}
+#entrep{
+	background-color: rgb(70,200,245);
+	color:#fff;
+}
+#stratPlan{
+	background-color:rgb(0,153,209);
+	color:#fff;
+}
+#workforce{
+	background-color: rgb(253,156,2);
+	color: #fff;
 }
 /*
  * Circle Size classes
@@ -198,7 +276,9 @@ circle{
 #typeFilters > .btn{
 	margin:5px;
 }
-
+#underMap{
+	margin-top:2em;
+}
 
 
 
@@ -283,6 +363,41 @@ circle{
 
 @media only screen and (min-width: 35em) {
     /* Style adjustments for viewports that meet the condition */
+}
+
+@media (max-width: 750px){
+	.middleTitles{
+		display:none;
+	}
+	.statTitle{
+		display:inline;
+	}
+	#usStats>.col-md-3, #usStats>.col-md-6, #countyStats>.col-md-3, #countyStats>.col-md-6{
+		clear:left;
+	}
+}
+@media (min-width:1500px){
+	#header h1{
+		font-size:3.5em;
+	}
+	#headInstructions{
+		font-size:1.2em;
+	}
+	#statsContainer{
+		font-size:1.5em;
+	}
+	#statsContainer h4{
+		font-size:1.5em;
+	}
+	#centerContainer h4, #centerContainer{
+		font-size:1.5em;
+	}
+	#nacoLogo{
+		height:80px;
+	}
+	#underMap{
+		font-size:1.5em;
+	}
 }
 
 @media print,
