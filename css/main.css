@@ -131,7 +131,7 @@ circle{
 	stroke-width: .8px;
 	stroke: #000;
 }
-#popFilters{
+#popFilters, #regionFilters{
 	text-align:center;
 }
 #mapContainer{
@@ -166,7 +166,6 @@ circle{
 .statTitle, .middleTitles{
 	font-size:1.1em;
 	text-align:center;
-	font-weight:200;
 }
 .middleTitles{
 	display:inline;
