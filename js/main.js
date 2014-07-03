@@ -448,14 +448,17 @@ function regionFilterBehavior(){
 function resetFilters(){
 	var typeButtons = d3.select("#typeFilters").selectAll(".btn");
 	var popButtons = d3.select("#popFilters").selectAll(".btn");
+	var regionButtons = d3.select("#regionFilters").selectAll(".btn");
 	popSelection = ['large', 'medium', 'small'];
 	colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
+	regionSelection = ['northeast', 'south', 'midwest', 'west'];
 	
 	popButtons.classed("active", true);
 	typeButtons.classed("active", true);
+	regionButtons.classed("active", true);
 	
 	
-	addRemoveCircles(null, false, colorSelection, popSelection, 'color');
+	addRemoveCircles(null, false, colorSelection, popSelection, regionSelection, 'color');
 }
 function populateStats(d){
 	
