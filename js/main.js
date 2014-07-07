@@ -1,5 +1,6 @@
 d3.select(window).on("resize", throttle);
 //popover js
+function toTitleCase(str){ return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}); }
 function setDefinitionBehavior(){
 	$('.popover-dismiss').popover({trigger: 'click, hover'});
 }
@@ -57,7 +58,9 @@ var typeById = {},
 	unemById = {},
 	povById = {},
 	eduById = {},
-	linkById = {};
+	linkById = {},
+	idByName = {},
+	countyObjectById = {};
 	
 var countyName = d3.select("#countyName"),
 	countyPop2013 = d3.select('#countyPop2013'),
@@ -151,6 +154,7 @@ function setup(width,height){
   sizeFilterBehavior();
   regionFilterBehavior();
   setDefinitionBehavior();
+  //setSearchBehavior();
 }
 
 d3.csv("data/EDMapData.csv", function (error, countyData) {
@@ -176,6 +180,7 @@ d3.csv("data/EDMapData.csv", function (error, countyData) {
 		eduById[d.id] = +d.edu;
 		linkById[d.id] = d.link;
 	});
+	
 	
 });
 	
@@ -216,6 +221,7 @@ function draw(topo, stateMesh) {
    			it.properties.x = width/2;
    			it.properties.y = height/2;
    		})
+   		.attr("id", function(it){return nameById[it.id].replace(/\s+/g, '').replace(',', '');})
    		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] ;})
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
@@ -274,6 +280,7 @@ function draw(topo, stateMesh) {
 			doubleClicked(linkById[d.id]);
 		});
 	}
+	 //buildCountyList();
 }
 var prevSelected;
 function addRemoveCircles(selected, add, cSelection, pSelection, rSelection, which){
@@ -471,8 +478,47 @@ function populateStats(d){
 	countyEdu.html(format['percent'](eduById[d.id]));
 	
 }
+//doesn't work
+function buildCountyList(){
+	var table = d3.select('#countyList').append('table').attr('class', 'table').append('tbody');
+	
+	var namesPerRow = 5;	
+	var rowCount = 0;
+	var i = 0;
+	while(i<circles[0].length){
+		var row = table.append('tr');
+		rowCount ++;
+		for(j=0; j<namesPerRow; j++){
+			row.append('td').attr('class', circles[0][i+j].id).append('a').text(circles[0][i+j].id);
+		}
+		i+=5;
+	}
+	d3.selectAll('td').on('click', function(){
+			var str = this.className;
+			var connectedId = "#" + str.replace(/\s+/g, '').replace(',', '');
+			console.log(connectedId);
+			d3.select(connectedId);
+			clicked();
+		});
+}
 
+function executeSearchMatch(FIPS) {
+	$('#search_field').val('');
+	
+	var county = countyObjectById[parseInt(FIPS)];
+    if (county) {
+		highlight(county);
+		populateStats(county);
+		
+	} else {
+		tooltip.classed('hidden', true);
+		//noty({text: 'No information availble for this county'});
+		return false;
+	}    
+};
 function highlight(d) {
+	
+	console.log(d);
 	countyStats.show();
 	countyTitle.show();
 	

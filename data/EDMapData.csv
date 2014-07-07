@@ -1,5 +1,5 @@
 id,County,State,CountyState,CountySize,EconDevType,TypeNum,TypeNum2,TypeNum3,TypeNum4,pop2000,pop2013,popGrowth,jobs2000,jobs2013,jobsGrowth,incPerCap,unem,pov,edu,link,region
-6001,Alameda County,CA,"Alameda County, CA",3,Workforce Development,1,3,5,,1450220,1578891,0.006560459,708689,678091,-0.00298067,54683,5.7,11.5,41.1,AlamedaCA.pdf,4
+6001,Alameda County,CA,"Alameda County, CA",3,Workforce Development,1,3,5,,1450220,1578891,0.006560459,708689,678091,-0.00298067,54683,0.057,0.115,0.411,AlamedaCA.pdf,4
 22005,Ascension Parish,LA,"Ascension Parish, LA",2,Strategic Planning,2,,,,77335,114393,0.030572905,29806,40046,0.022976845,43881,0.038,0.094,0.233,AscensionLA.pdf,2
 13015,Bartow County,GA,"Bartow County, GA",2,Workforce Development,1,3,6,,76703,101273,0.021605398,30772,31227,0.001129708,29100,0.064,0.143,0.162,BartowGA.pdf,2
 35001,Bernalillo County,NM,"Bernalillo County, NM",3,Entrepreneurship and Small Business Support,3,3,6,,557158,674221,0.014778061,311508,311203,-7.54E-05,37537,0.059,0.161,0.318,BernalilloNM.pdf,4
@@ -9,7 +9,7 @@ id,County,State,CountyState,CountySize,EconDevType,TypeNum,TypeNum2,TypeNum3,Typ
 39025,Clermont County,OH,"Clermont County, OH",2,Infrastructure Investment,5,6,,,178629,200218,0.008815223,49314,54578,0.007832271,38416,0.048,0.097,0.254,ClermontOH.pdf,3
 41009,Columbia County,OR,"Columbia County, OR",1,Strategic Planning,2,,,,43657,49344,0.009463929,10210,9896,-0.002399961,35427,0.074,0.13,0.174,ColumbiaOR.pdf,4
 55025,Dane County,WI,"Dane County, WI",3,Workforce Development,1,2,3,,428626,509939,0.013451699,275803,310280,0.009101808,49479,0.038,0.134,0.458,DaneWI.pdf,3
-8041,El Paso County,CO,"El Paso County, CO",3,Regional Marketing and Branding,6,,,,519463,655044,0.017999052,240733,245137,0.001395496,40893,0.07,0.113,0.353,ElPaseCA.pdf,4
+8041,El Paso County,CO,"El Paso County, CO",3,Regional Marketing and Branding,6,,,,519463,655044,0.017999052,240733,245137,0.001395496,40893,0.07,0.113,0.353,ElPasoCO.pdf,4
 51059,Fairfax County,VA,"Fairfax County, VA",3,International Economic Development Initiatives,2,4,,,974761,1130924,0.011496192,545298,586104,0.005566576,71607,0.036,0.052,0.582,FairfaxVA.pdf,2
 39049,Franklin County,OH,"Franklin County, OH",3,Entrepreneurship and Small Business Support,1,2,3,4,1072307,1212263,0.009481316,702867,692583,-0.001133173,42624,0.043,0.165,0.36,FranklinOH.pdf,3
 30031,Gallatin County,MT,"Gallatin County, MT",2,Workforce Development,1,2,,,68369,94720,0.025394441,35983,49616,0.025020721,40000,0.034,0.146,0.454,GallatinMT.pdf,4
@@ -26,10 +26,10 @@ id,County,State,CountyState,CountySize,EconDevType,TypeNum,TypeNum2,TypeNum3,Typ
 26099,Macomb County,MI,"Macomb County, MI",3,Regional Marketing and Branding,6,,,,790821,854769,0.005999433,336744,303342,-0.008003349,37664,0.076,0.109,0.222,MacombMI.pdf,3
 1089,Madison County,AL,"Madison County, AL",2,International Economic Development Initiatives,4,,,,277868,346892,0.017213185,154837,181264,0.012195425,43102,0.055,0.116,0.378,MadisonAL.pdf,2
 26139,Ottawa County,MI,"Ottawa County, MI",2,Workforce Development,3,,,,239490,272701,0.010039623,121018,113459,-0.004949079,36663,0.05,0.11,0.293,OttawaMI.pdf,3
-28081,PUL Alliance,MS,"PUL Alliance, MS",2,Regional Marketing and Branding,6,,,,75960,85340,0.008996876,53042,50399,-0.003924028,36666,0.068,0.156,0.214,PULAllianceMS.pdf,2
+28081,PUL Alliance,MS,"PUL Alliance, MS",2,Regional Marketing and Branding,6,,,,,143991,,,71754,,32013,0.062666667,,0.2,PULAllianceMS.pdf,
 27129,Renville County,MN,"Renville County, MN",1,Entrepreneurship and Small Business Support,3,,,,17136,15166,-0.009350276,6215,5720,-0.006364042,52268,0.057,0.093,0.152,RenvilleMN.pdf,3
 6065,Riverside County,CA,"Riverside County, CA",3,International Economic Development Initiatives,3,4,6,,1559109,2292507,0.030100394,471885,594490,0.017925583,31742,0.083,0.14,0.205,RiversideCA.pdf,4
-42027,SEDA-COG,PA,"SEDA-COG, PA",2,Infrastructure Investment,2,5,6,,135930,155403,0.010351805,63019,67343,0.005117874,40894,0.035,0.242,0.399,SEDA-COGPA.pdf,1
+42027,SEDA-COG,PA,"SEDA-COG, PA",2,Infrastructure Investment,2,5,6,,,693203,,,262973,,36213,0.048545455,,0.2,SEDA-COGPA.pdf,
 29213,Taney County,MO,"Taney County, MO",2,Strategic Planning,2,6,,,39937,53575,0.022855688,25910,29894,0.011062962,27861,0.077,0.155,0.19,TaneyMO.pdf,3
 48439,Tarrant County,TX,"Tarrant County, TX",3,Strategic Planning,5,,,,1454402,1911541,0.021246789,708219,812634,0.010635191,43044,0.047,0.126,0.291,TarrantTX.pdf,2
 99999,United States,US,United States,,,,,,,"281,424,600","316,128,839",0.90%,"131,137,819","134,957,493",0.20%,"43,735",0.1,0.1,1,,
