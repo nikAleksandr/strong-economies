@@ -26,10 +26,10 @@ id,County,State,CountyState,CountySize,EconDevType,TypeNum,TypeNum2,TypeNum3,Typ
 26099,Macomb County,MI,"Macomb County, MI",3,Regional Marketing and Branding,6,,,,790821,854769,0.005999433,336744,303342,-0.008003349,37664,0.076,0.109,0.222,MacombMI.pdf,3
 1089,Madison County,AL,"Madison County, AL",2,International Economic Development Initiatives,4,,,,277868,346892,0.017213185,154837,181264,0.012195425,43102,0.055,0.116,0.378,MadisonAL.pdf,2
 26139,Ottawa County,MI,"Ottawa County, MI",2,Workforce Development,3,,,,239490,272701,0.010039623,121018,113459,-0.004949079,36663,0.05,0.11,0.293,OttawaMI.pdf,3
-28081,PUL Alliance,MS,"PUL Alliance, MS",2,Regional Marketing and Branding,6,,,,75960,85340,0.008996876,53042,50399,-0.003924028,36666,0.068,0.156,0.214,PULMS.pdf,2
+28081,PUL Alliance,MS,"PUL Alliance, MS",2,Regional Marketing and Branding,6,,,,75960,85340,0.008996876,53042,50399,-0.003924028,36666,0.068,0.156,0.214,PULAllianceMS.pdf,2
 27129,Renville County,MN,"Renville County, MN",1,Entrepreneurship and Small Business Support,3,,,,17136,15166,-0.009350276,6215,5720,-0.006364042,52268,0.057,0.093,0.152,RenvilleMN.pdf,3
 6065,Riverside County,CA,"Riverside County, CA",3,International Economic Development Initiatives,3,4,6,,1559109,2292507,0.030100394,471885,594490,0.017925583,31742,0.083,0.14,0.205,RiversideCA.pdf,4
-42027,SEDA-COG,PA,"SEDA-COG, PA",2,Infrastructure Investment,2,5,6,,135930,155403,0.010351805,63019,67343,0.005117874,40894,0.035,0.242,0.399,SEDACOGPA.pdf,1
+42027,SEDA-COG,PA,"SEDA-COG, PA",2,Infrastructure Investment,2,5,6,,135930,155403,0.010351805,63019,67343,0.005117874,40894,0.035,0.242,0.399,SEDA-COGPA.pdf,1
 29213,Taney County,MO,"Taney County, MO",2,Strategic Planning,2,6,,,39937,53575,0.022855688,25910,29894,0.011062962,27861,0.077,0.155,0.19,TaneyMO.pdf,3
 48439,Tarrant County,TX,"Tarrant County, TX",3,Strategic Planning,5,,,,1454402,1911541,0.021246789,708219,812634,0.010635191,43044,0.047,0.126,0.291,TarrantTX.pdf,2
 99999,United States,US,United States,,,,,,,"281,424,600","316,128,839",0.90%,"131,137,819","134,957,493",0.20%,"43,735",0.1,0.1,1,,

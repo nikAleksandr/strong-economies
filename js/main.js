@@ -220,7 +220,8 @@ function draw(topo, stateMesh) {
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
    		.style("fill", function(it) {if(!isNaN(typeById[it.id])){return defaultColor;}else{return 'none';}})
-   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + typeClasses(typeById[it.id]) + " "+ typeClasses(type2ById[it.id]) + " active";}else{return "circle";}});
+   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + typeClasses(typeById[it.id]) + " "+ typeClasses(type2ById[it.id]) + " active";}else{return "circle";}})
+   		.append("svg:title").text(function(d){return nameById[d.id];});
    
    circles = d3.selectAll('circle').filter(function(d){return typeById[d.id];});
    
@@ -236,7 +237,6 @@ function draw(topo, stateMesh) {
 			populateStats(d);
 		}		
 	};
-	
 	
 	if ($('html').hasClass('no-touch')) {
 		circles.each(function(d) {

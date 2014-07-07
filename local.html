@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Strong Economies</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <script src="js/vendor/modernizr-2.7.1.min.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/local/bootstrap.min.css">
+        <script src="js/local/d3.v3.min.js"></script>
+		<script src="js/local/topojson.v1.min.js"></script>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <div id="container" class="container-fluid">
+        <!--[if lt IE 8]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+		<div id="header">
+			<div class="row">
+				<div class="col-md-9" style="font-family:'Arvo', serif;"><h1>Strong Economies, Resilient Counties: <br/><small style="color:#000;">The Role of Counties in Economic Development</small></h1></div>
+				<div class="col-md-3" ><img id="nacoLogo" style="margin-top:30px;" src="img/NACoLogo_NoTagBLACK_tm.png"/></div>	
+			</div>
+			<div id="headInstructions" class="row">
+				<div class="col-md-4">Click on a county to see its economic profile data.</div>
+				<div class="col-md-4">Use the filters on the right-hand side to narrow your search.</div>
+				<div class="col-md-4">Double-click on a county to view or print a case study of <br/>the county government economic development initiatives.</div>
+			</div>
+		</div>
+		<div id="statsContainer" class="container-fluid">
+			<div id="usStats" class="row">
+				<div id="usStats-title" class="col-md-2" style="text-align:center;"><h4>United States</h4></div>
+				<div class="col-md-2">
+					<p class="row statTitle">Population, 2013</p>
+					<div class="row statContainer val">316.1 Mil</div>
+				</div>
+				<div class="col-md-2">
+					<p class="row statTitle">Employment, 2013</p>
+					<div class="row statContainer val">136.4 Mil</div>
+				</div>
+				<div class="col-md-2">
+					<p class="statTitle">Unemployment Rate, April 2014</p>
+					<div class="statContainer val">6.3<span class="unit">&#37</span></div>
+				</div>
+				<div class="col-md-2">
+					<p class="statTitle">Income Per Capita, 2013</p>
+					<div class="statContainer val"><span class"unit">$</span>43.7k</div>
+				</div>
+				<div class="col-md-2">
+					<p class="statTitle">Education, 2012</p>
+					<div class="statContainer val">28.5<span class="unit">&#37</span></div>
+				</div>
+			</div>
+			<div id="middleTitleRow" class="row">
+				<div class="col-md-2"></div>
+				<a id="popTitle" class="col-md-2 middleTitles popover-dismiss" data-toggle="popover" title="Population, 2013" data-content="Number of county residents in 2013.">Population, 2013</a>
+				<a id="empTitle" class="col-md-2 middleTitles popover-dismiss" data-toggle="popover" title="Employment, 2013" data-content="Annual average of monthly employment levels for 2013.">Employment, 2013</a>
+				<a id="unemTitle" class="col-xs-2 middleTitles popover-dismiss" data-toggle="popover" title="Unemployment Rate, April 2014" data-content="The ratio of unemployed persons to the civilian labor force, expressed as a percent.">Unemployment Rate, April 2014</a>
+				<a id="incTitle" class="col-xs-2 middleTitles popover-dismiss" data-placement="left" data-toggle="popover" title="Income Per Capita, 2012" data-content="Per capita personal income is calculated as the personal income of the residents of a given area divided by the resident population of the area.  Personal income is the income that is received by persons from all sources, including wages and salaries, supplements to wages and salaries, proprietors' income with inventory valuation and capital consumption adjustments, rental income of persons with capital consumption adjustment, personal dividend income, personal interest income, and personal current transfer receipts, less contributions for government social insurance.">Income per Capita, 2012</a>
+				<a id="eduTitle" class="col-xs-2 middleTitles popover-dismiss" data-placement="left" data-toggle="popover" title="Education, 2012" data-content="Share of population in the county 25 years old or over who have obtained a Bachelor’s degree or higher, including a Master’s degrees, professional school doctorate degrees and doctorate degrees.">Education, 2012</a>
+			</div>
+			<div id="countyStats" class="row">
+				<div id="countyStats-title" class="col-md-2" style="text-align:center;"><h4 id="countyName">United States</h4></div>
+				<div class="col-md-2">
+					<p class="statTitle popover-dismiss" data-toggle="popover" title="PopOver" data-content="definitions go here">Population, 2013</p>
+					<div class="row statContainer val"><span id="countyPop2013">316,128,839</span></div>
+				</div>
+				<div class="col-md-2">
+					<p class="statTitle">Employment, 2013</p>
+					<div class="row statContainer val"><span id="countyJobs2013">136.4 Mil</span></div>
+				</div>
+				<div class="col-md-2">
+					<p class="statTitle">Unemployment</p>
+					<div class="statContainer val"><span id="countyUnem">10&#37</span></div>
+				</div>
+				<div class="col-md-2">
+					<p class="statTitle">Income</p>
+					<div class="statContainer val"><span id="countyIncPerCap">$43,735</span></div>
+				</div>
+				<div class="col-md-2">
+					<p class="statTitle">Education</p>
+					<div class="statContainer val"><span id="countyEdu">36&#37</span></div>
+				</div>
+			</div>
+			<hr/>
+		</div>
+		<div id="centerContainer" class="container-fluid">
+			<div class="row">
+				<div id="mapContainer" class="col-md-9">
+					<div id="map"></div>
+					<div class="row">
+						<p id="byline">Brought to you by <a href="mailto:research@naco.org">NACo Research</a></p>
+					</div>		
+				</div>
+				<div class="col-md-3">
+					<a style="text-align:center;" href="#" onclick="resetFilters();">Reset All Filters</a>
+					<h4>Filter by Economic Development Activity Type</h4>
+					<div class="row" id="typeFilters">
+						<button type="button" id="workforce" class="btn btn-lg btn-block btn-default active" data-placement="left" data-toggle="popover" title="Workforce Development" data-content="definitions go here.">Workforce Development</button>
+						<button type="button" id="stratPlan" class="btn btn-lg btn-block btn-default active" data-placement="left" data-toggle="popover" title="Disaster Preparedness/ Industry Diversification" data-content="definitions go here.">Disaster Preparedness/ Industry Diversification</button>
+						<button type="button" id="entrep" class="btn btn-lg btn-block btn-default active" data-placement="left" data-toggle="popover" title="Entrepreneurship & Small Business Support" data-content="definitions go here.">Entrepreneurship &amp; Small Business Support</button>
+						<button type="button" id="inter" class="btn btn-lg btn-block btn-default active" data-placement="left" data-toggle="popover" title="International Economic Development Initiatives" data-content="definitions go here.">International Economic Development Initiatives</button>
+						<button type="button" id="infra" class="btn btn-lg btn-block btn-default active" data-placement="left" data-toggle="popover" title="Infrastructure Investment" data-content="definitions go here.">Infrastructure Investment</button>
+						<button type="button" id="region" class="btn btn-lg btn-block btn-default active" data-placement="left" data-toggle="popover" title="Regional Marketing and Branding/ Business Recruitment" data-content="definitions go here.">Regional Marketing and Branding/ Business Recruitment</button>
+					</div>
+					<h4>Filter by County Population Size</h4>
+					<div id="popFilters" class="row">
+						<button type="button" id="small" class="btn btn-lg btn-default active popover-dismiss" data-placement="top" data-toggle="popover" title="Small-sized Counties" data-content="Counties with populations of less than 50,000.">Small</button>
+						<button type="button" id="medium" class="btn btn-lg btn-default active popover-dismiss" data-placement="top" data-toggle="popover" title="Medium-sized Counties" data-content="Counties with populations between 50,000 - 500,000.">Medium-sized</button>
+						<button type="button" id="large" class="btn btn-lg btn-default active popover-dismiss" data-placement="top" data-toggle="popover" title="Large-sized Counties" data-content="Counties with populations of more than 500,000.">Large</button>
+					</div>
+					<h4>Filter by Census Region</h4>
+					<div id="regionFilters" class="row">
+						<button type="button" id="northeast" class="btn btn-lg btn-default active" data-placement="top" data-toggle="popover" title="Small-sized Counties" data-content="Counties with populations of less than 50,000.">NE</button>
+						<button type="button" id="south" class="btn btn-lg btn-default active" data-placement="top" data-toggle="popover" title="Medium-sized Counties" data-content="Counties with populations between 50,000 - 500,000.">S</button>
+						<button type="button" id="midwest" class="btn btn-lg btn-default active" data-placement="top" data-toggle="popover" title="Large-sized Counties" data-content="Counties with populations in excess of 500,000.">MW</button>
+						<button type="button" id="west" class="btn btn-lg btn-default active" data-placement="top" data-toggle="popover" title="Large-sized Counties" data-content="Counties with populations in excess of 500,000.">W</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div id="underMap">
+				<p>The National Association of Counties (NACo) developed this research in partnership with the Lyndon B. Johnson (LBJ) School of Public Affairs at the University of Texas at Austin.</p>
+				<p><i>Sources: </i>U.S Census Bureau, Population Estimates Program; U.S. Bureau of Labor Statistics; U.S. Bureau of Economic Analysis.</p>
+			</div>
+		</div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script src="js/local/bootstrap.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+    	</div>
+    </body>
+</html>
