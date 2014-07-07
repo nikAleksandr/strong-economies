@@ -47,6 +47,7 @@ var typeById = {},
 	type4ById = {},
 	nameById = {},
 	sizeById = {},
+	size2ById = {},
 	regionById = {},
 	pop2000ById = {},
 	pop2013ById = {},
@@ -127,8 +128,11 @@ function sizeClasses(d){
 		case 2:
 			return "medium";
 			break;
-		default:
+		case 1:
 			return "small";
+			break;
+		default:
+			return "none";
 	}
 }
 
@@ -167,6 +171,7 @@ d3.csv("data/EDMapData.csv", function (error, countyData) {
 	  	type4ById[d.id] = +d.TypeNum4; 
 	  	nameById[d.id] = d.CountyState;
 	  	sizeById[d.id] = +d.CountySize;
+	  	size2ById[d.id] = +d.CountySize2;
 	  	regionById[d.id] = +d.region;
 	  	pop2000ById[d.id] = +d.pop2000;
 		pop2013ById[d.id] = +d.pop2013;
@@ -226,7 +231,7 @@ function draw(topo, stateMesh) {
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
    		.style("fill", function(it) {if(!isNaN(typeById[it.id])){return defaultColor;}else{return 'none';}})
-   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + typeClasses(typeById[it.id]) + " "+ typeClasses(type2ById[it.id]) + " active";}else{return "circle";}})
+   		.attr("class", function(it){if(!isNaN(typeById[it.id])){return "circle " + "hasData "+ sizeClasses(sizeById[it.id]) + " " + typeClasses(typeById[it.id])  + " active";}else{return "circle";}})
    		.append("svg:title").text(function(d){return nameById[d.id];});
    
    circles = d3.selectAll('circle').filter(function(d){return typeById[d.id];});
@@ -321,7 +326,7 @@ function addRemoveCircles(selected, add, cSelection, pSelection, rSelection, whi
 			r++;
 		}
 		while(p<pSelection.length){
-			if(sizeClasses(sizeById[d.id])===pSelection[p]){
+			if(sizeClasses(sizeById[d.id])===pSelection[p] || sizeClasses(size2ById[d.id])===pSelection[p]){
 				popMatch = true;
 				break;
 			}
