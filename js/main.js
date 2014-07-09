@@ -71,7 +71,7 @@ var countyName = d3.select("#countyName"),
 	countyPov = d3.select('#countyPov'),
 	countyEdu = d3.select('#countyEdu');
 	
-var topo,projection,path,svg,g;
+var topo,stateMesh,projection,path,svg,g;
 var circles, clickedCircle;
 var colorSelection = ['workforce', 'stratPlan', 'entrep', 'inter', 'infra', 'region'];
 var popSelection = ['large', 'medium', 'small'];
@@ -192,7 +192,7 @@ d3.csv("data/EDMapData.csv", function (error, countyData) {
 d3.json("us.json", function(error, us) {
 
   var counties = topojson.feature(us, us.objects.counties).features;
-  var stateMesh = topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; });
+  stateMesh = topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; });
   
   topo = counties;
   draw(topo, stateMesh);
@@ -549,7 +549,7 @@ function redraw() {
   height = width / 2;
   d3.select('svg').remove();
   setup(width,height);
-  draw(topo);
+  draw(topo, stateMesh);
 }
 
 var throttleTimer;
