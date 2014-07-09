@@ -491,6 +491,7 @@ function buildCountyList(){
 	
 	var namesPerRow = 5;
 	var i = 0;
+	circles[0].sort(function(a,b){return a.id-b.id;});
 	while(i<circles[0].length){
 		var row = table.append('tr');
 		for(j=0; j<namesPerRow; j++){
