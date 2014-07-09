@@ -196,6 +196,7 @@ d3.json("us.json", function(error, us) {
   
   topo = counties;
   draw(topo, stateMesh);
+  buildCountyList();
 
 });
 
@@ -226,7 +227,7 @@ function draw(topo, stateMesh) {
    			it.properties.x = width/2;
    			it.properties.y = height/2;
    		})
-   		.attr("id", function(it){return nameById[it.id].replace(/\s+/g, '').replace(',', '');})
+   		.attr("id", function(it){return it.id;})
    		.attr("cx", function(it) { return it.properties.x + it.properties.c[0] ;})
    		.attr("cy", function(it) { return it.properties.y + it.properties.c[1] ;})
    		.attr("r", function(it) { if(!isNaN(typeById[it.id])){return it.properties.r;} else{return 0;} })
@@ -285,7 +286,6 @@ function draw(topo, stateMesh) {
 			doubleClicked(linkById[d.id]);
 		});
 	}
-	 //buildCountyList();
 }
 var prevSelected;
 function addRemoveCircles(selected, add, cSelection, pSelection, rSelection, which){
@@ -485,26 +485,21 @@ function populateStats(d){
 }
 //doesn't work
 function buildCountyList(){
-	var table = d3.select('#countyList').append('table').attr('class', 'table').append('tbody');
 	
-	var namesPerRow = 5;	
-	var rowCount = 0;
+		
+	var table = d3.select('#countyList').append('table').attr('class', 'table').attr('id', 'listTable').append('tbody');
+	
+	var namesPerRow = 5;
 	var i = 0;
 	while(i<circles[0].length){
 		var row = table.append('tr');
-		rowCount ++;
 		for(j=0; j<namesPerRow; j++){
-			row.append('td').attr('class', circles[0][i+j].id).append('a').text(circles[0][i+j].id);
+			var name = nameById[circles[0][i+j].id];
+			var link = 'profiles/' + linkById[circles[0][i+j].id];
+			row.append('td').append('a').attr('href', link).text(name);
 		}
-		i+=5;
+		i+=namesPerRow;
 	}
-	d3.selectAll('td').on('click', function(){
-			var str = this.className;
-			var connectedId = "#" + str.replace(/\s+/g, '').replace(',', '');
-			console.log(connectedId);
-			d3.select(connectedId);
-			clicked();
-		});
 }
 
 function executeSearchMatch(FIPS) {
