@@ -63,10 +63,10 @@
 			<div id="middleTitleRow" class="row">
 				<div class="col-md-2"></div>
 				<a id="popTitle" class="col-md-2 middleTitles popover-dismiss" data-toggle="popover" title="Population, 2013" data-content="Number of county residents in 2013.">Population, 2013</a>
-				<a id="empTitle" class="col-md-2 middleTitles popover-dismiss" data-toggle="popover" title="Employment, 2013" data-content="Annual average of monthly employment levels for 2013.">Employment, 2013</a>
-				<a id="unemTitle" class="col-xs-2 middleTitles popover-dismiss" data-toggle="popover" title="Unemployment Rate, April 2014" data-content="The ratio of unemployed persons to the civilian labor force, expressed as a percent.">Unemployment Rate, April 2014</a>
-				<a id="incTitle" class="col-xs-2 middleTitles popover-dismiss" data-placement="left" data-toggle="popover" title="Income Per Capita, 2012" data-content="Per capita personal income is calculated as the personal income of the residents of a given area divided by the resident population of the area.  Personal income is the income that is received by persons from all sources, including wages and salaries, supplements to wages and salaries, proprietors' income with inventory valuation and capital consumption adjustments, rental income of persons with capital consumption adjustment, personal dividend income, personal interest income, and personal current transfer receipts, less contributions for government social insurance.">Income per Capita, 2012</a>
-				<a id="eduTitle" class="col-xs-2 middleTitles popover-dismiss" data-placement="left" data-toggle="popover" title="Education, 2012" data-content="Share of population in the county 25 years old or over who have obtained a Bachelor’s degree or higher, including a Master’s degrees, professional school doctorate degrees and doctorate degrees.">Education, 2012</a>
+				<a id="empTitle" class="col-md-2 middleTitles popover-dismiss" data-toggle="popover" title="Employment, 2013" data-content="The annual average of the monthly number of workers in the county.">Employment, 2013</a>
+				<a id="unemTitle" class="col-xs-2 middleTitles popover-dismiss" data-toggle="popover" title="Unemployment Rate, April 2014" data-content="The proportion of the civilian labor force that was unemployed in April 2014.">Unemployment Rate, April 2014</a>
+				<a id="incTitle" class="col-xs-2 middleTitles popover-dismiss" data-placement="left" data-toggle="popover" title="Income Per Capita, 2012" data-content="The ratio of income received by county residents from all sources to the number of residents in a county.">Income per Capita, 2012</a>
+				<a id="eduTitle" class="col-xs-2 middleTitles popover-dismiss" data-placement="left" data-toggle="popover" title="Educational Attainment, 2012" data-content="Share of county residents 25 years old or over who have obtained a Bachelor’s degree or higher.">Educational Attainment, 2012</a>
 			</div>
 			<div id="countyStats" class="row">
 				<div id="countyStats-title" class="col-md-2" style="text-align:center;"><h4 id="countyName">United States</h4></div>
@@ -98,7 +98,15 @@
 				<div id="mapContainer" class="col-md-9">
 					<div id="map"></div>
 					<div class="row">
+						<!--<form style="text-align:center;" id="search_form">
+							<input type="search" id="search_field" placeholder="county name">
+							<input type="image" src="img/active-search.svg" width="18px" height="18px" id="search_submit" value="Search">
+						</form>-->
 						<p id="byline">Brought to you by <a href="mailto:research@naco.org">NACo Research</a></p>
+						<h4 style="margin-left:1em;"><a href="http://www.naco.org/research/Pages/strong-economies.aspx">Read the Executive Summary and Full Report.</a></h4>
+						<div id="countyList" class="container-fluid">
+							<h4>Click below to view or print a case study of the county government economic development initiatives.</h4>
+						</div>
 					</div>		
 				</div>
 				<div class="col-md-3">
@@ -137,6 +145,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="js/local/bootstrap.min.js"></script>
+        <script src="js/vendor/jquery.doubletap.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
